@@ -1,7 +1,13 @@
 v 4
+file . "bdr.vhd" "687fead759296bf66747167624458c750e087780" "20240501155153.196":
+  entity bdr at 1( 0) + 0 on 27;
+  architecture a_bdr of bdr at 19( 664) + 0 on 28;
 file . "ula.vhd" "4813a8d893cda42a49b3cbbae01c00c23c7c9553" "20240414225304.916":
   entity ula at 1( 0) + 0 on 11;
   architecture a_ula of ula at 14( 274) + 0 on 12;
 file . "ula_tb.vhd" "7648361561a8513a2d9cad03ce4b17f862de836b" "20240414230815.932":
   entity ula_tb at 1( 0) + 0 on 15;
   architecture a_ula_tb of ula_tb at 8( 93) + 0 on 16;
+file . "reg16bits.vhd" "f274138051163f3300b5189e55dd12b18a04a5c2" "20240501142155.823":
+  entity reg16bits at 1( 0) + 0 on 17;
+  architecture a_reg16bits of reg16bits at 15( 281) + 0 on 18;
