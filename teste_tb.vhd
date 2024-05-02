@@ -98,16 +98,16 @@ begin
       regnum2 <="010";
       wait for 50 ns;
       write_enable <= '0';
-      wait for 50 ns;
+      wait for 200 ns;
       entrada1 <= reg1_data;
       entrada2 <= reg2_data;
       seletor <= "10";
-      --wait for 50 ns;
+      wait for 50 ns;
       word <= saida;
-      --reg_to_write <= "011";
-      --write_enable <= '1';
-      --wait for 200 ns;
-      --reset <= '0';
+      reg_to_write <= "011";
+      write_enable <= '1';
+      wait for 200 ns;
+      reset <= '1';
       wait;                     -- <== OBRIGATORIO TERMINAR COM WAIT; !!!
    end process;
 end architecture ateste_tb;
