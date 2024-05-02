@@ -69,12 +69,12 @@ begin
     process
     begin
         
-        word <= "000000000101";
+        word <= "0000000000000101";
         reg_to_write <= "001";
         write_enable <= '1';
         
         write_enable <= '0';
-        word <= "000000000011";
+        word <= "0000000000000011";
         reg_to_write <= "010";
         write_enable <='1';
         

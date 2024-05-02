@@ -12,13 +12,13 @@ entity mux32x16 is
 end entity mux32x16;
 
 architecture a_mux32x16 of mux32x16 is
-    signal out0: unsigned(15 down to 0)
+    signal out0: unsigned(15 downto 0);
 begin
     out0 <= data_in0 when selec ='0' else 
-    out0 <= data_in1 when selec ='1' else
+    	    data_in1 when selec ='1' else
     "0000000000000000";
     
-    data_out <= out0
+    data_out <= out0;
     
 
-end architecture mux32x16;
+end architecture a_mux32x16;

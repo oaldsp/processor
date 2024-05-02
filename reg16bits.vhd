@@ -28,4 +28,4 @@ begin
 	end process;
 
 	data_out <= registro;
-end architecture;
+end architecture a_reg16bits;

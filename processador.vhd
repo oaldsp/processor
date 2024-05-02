@@ -50,29 +50,25 @@ signal saida: unsigned(15 downto 0);
 signal seletor: unsigned(1 downto 0);
 
 
-/* Componentes para uso futuro
-component acc
-port(
-    clk      : in std_logic;
-    rst      : in std_logic;
-    wr_en    : in std_logic;
-    data_in  : in unsigned(15 downto 0);
-    data_out : out unsigned(15 downto 0)
-);
-end component;
-*/
+--Componentes para uso futuro
+--component acc
+--port(
+--   clk      : in std_logic;
+--    rst      : in std_logic;
+--    wr_en    : in std_logic;
+--   data_in  : in unsigned(15 downto 0);
+--    data_out : out unsigned(15 downto 0)
+--);
+--end component;
 
-/*
-component mux32x16
-    port(
-        data_in0  : in unsigned(15 downto 0);
-        data_in1  : in unsigned(15 downto 0);
-        data_out : out unsigned(15 downto 0);
-        selec: in STD_LOGIC
-    );
-end component mux32x16;
-*/
-
+--component mux32x16
+--    port(
+--        data_in0  : in unsigned(15 downto 0);
+--        data_in1  : in unsigned(15 downto 0);
+--        data_out : out unsigned(15 downto 0);
+--        selec: in STD_LOGIC
+--    );
+--end component mux32x16;
 
 begin
     utt: ula port map(
