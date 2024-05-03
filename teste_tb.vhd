@@ -85,14 +85,14 @@ begin
     end process clk_proc;
    process                      -- sinais dos casos de teste (p.ex.)
    begin
-      word <= "0000000000000101";
+      word <= "0000000000000011";
       reg_to_write <= "001";
       write_enable <= '1';
       regnum1 <="001";
       wait for 50 ns;
       write_enable <= '0';
       wait for 50 ns;
-      word <= "0000000000000011";
+      word <= "0000000000000101";
       reg_to_write <= "010";
       write_enable <='1';
       regnum2 <="010";
@@ -101,7 +101,7 @@ begin
       wait for 200 ns;
       entrada1 <= reg1_data;
       entrada2 <= reg2_data;
-      seletor <= "10";
+      seletor <= "01";
       wait for 50 ns;
       word <= saida;
       reg_to_write <= "011";
