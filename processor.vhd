@@ -40,6 +40,15 @@ architecture a_processor of processor is
    	 );
    	end component;
    
+	component flipflopT is
+        port
+        (
+            clk : in std_logic;
+            rst : in std_logic;
+            data_out : out unsigned(0 downto 0)
+        );
+    	end component;
+
    	signal reg_to_entrada1, reg_to_entrada2: unsigned(15 downto 0);  
 
 begin

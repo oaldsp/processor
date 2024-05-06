@@ -1,7 +1,13 @@
 all:
 	ghdl -a reg16bits.vhd 
 	ghdl -e reg16bits 
-	
+
+	ghdl -a mux32x16.vhd
+	ghdl -e mux32x16
+
+	ghdl -a acc.vhd
+	ghdl -e acc
+
 	ghdl -a rom.vhd
 	ghdl -e rom
 	
