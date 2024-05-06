@@ -16,7 +16,7 @@ architecture a_processor_tb of processor_tb is
                 clkP        : in std_logic;
                 resetP        : in std_logic;
                 seletorP      : in unsigned(1 downto 0);
-                saidaULA      : out unsigned(15 downto 0)
+                saidaULA, romOut      : out unsigned(15 downto 0)
         );
 	end component; 
    

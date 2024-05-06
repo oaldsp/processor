@@ -2,6 +2,15 @@ all:
 	ghdl -a reg16bits.vhd 
 	ghdl -e reg16bits 
 
+	ghdl -a flipflopT.vhdl
+	ghdl -e flipflopT
+
+	ghdl -a pc.vhdl
+	ghdl -e pc	
+
+	ghdl -a uc.vhd
+	ghdl -e uc
+
 	ghdl -a mux32x16.vhd
 	ghdl -e mux32x16
 
