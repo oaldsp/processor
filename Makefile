@@ -11,6 +11,10 @@ all:
 	ghdl -a bdr.vhd 
 	ghdl -e bdr	
 	
-	ghdl -a teste_tb.vhd
-	ghdl -e teste_tb
-	ghdl -r teste_tb --wave=teste_tb.ghw
+	ghdl -a processor.vhd
+	ghdl -e processor
+
+	ghdl -a processor_tb.vhd
+	ghdl -e processor_tb
+	ghdl -r processor_tb  --wave=processor_tb.ghw
+

@@ -40,18 +40,22 @@ begin
         --Pelas especificacoes no pdf esse cara deve ser sempre 0
  	reg0: reg16bits port map(clk=>clkBD,rst=>reset,wr_en=>'0',data_in=>"0000000000000000",data_out=>out_sig(15 downto 0));
 
-	process(clkBD,write_enable,regnum1,regnum2)
+	--LOGICA  PARA ESCRITA
+	--wr_en_sig(TO_INTEGER(reg_to_write)) <= '1' when write_enable='1';
+	--wr_en_sig <= "0000000" when write_enable='0';
+        
+	--LOGICA PARA SAIDA 1 e  2
+        reg1_data <= out_sig( ((TO_INTEGER(regnum1)+1)*16 -1) downto (TO_INTEGER(regnum1)*16) );
+        reg2_data <= out_sig( ((TO_INTEGER(regnum2)+1)*16 -1) downto (TO_INTEGER(regnum2)*16) );
+	
+	process(write_enable, reg_to_write)
 	begin	
-		--LOGICA  PARA ESCRITA
+		--LOGICA  PARA ESCRITA(ARRUMAR ISSO DAQUI ALGUM DIA)
 		if write_enable='1' then 
 			wr_en_sig(TO_INTEGER(reg_to_write)) <= '1';
 		else 
 			wr_en_sig <= "0000000";
 		end if;
-
-		--LOGICA PARA SAIDA 1 e  2
-		reg1_data <= out_sig( ((TO_INTEGER(regnum1)+1)*16 -1) downto (TO_INTEGER(regnum1)*16) );
-		reg2_data <= out_sig( ((TO_INTEGER(regnum2)+1)*16 -1) downto (TO_INTEGER(regnum2)*16) );::
 	end process;
 
 end architecture;
