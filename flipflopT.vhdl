@@ -7,13 +7,12 @@ entity flipflopT is
         (
             clk      : in  std_logic;
             rst      : in  std_logic;
-	    data_in  : out std_logic;
             data_out : out std_logic
         );
 end entity flipflopT;
 
 architecture a_flipflopT of flipflopT is
-	signal registerS: std_logic;
+	signal registerS: std_logic := '0';
 begin
 	process(clk, rst)
 	begin

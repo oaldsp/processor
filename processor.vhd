@@ -4,15 +4,14 @@ use ieee.numeric_std.all;
 
 entity processor is
 	port(
-		regnum1P      : in unsigned(2  downto 0);     --Registrador 1 que sera lido
-        	regnum2P      : in unsigned(2  downto 0);     --Registrador 2 que sera lido
-        	wordP         : in unsigned(15 downto 0);     --O que sera escrito
-        	reg_to_writeP : in unsigned(2 downto 0);      --Qual reg eh para escrver
-        	write_enableP : in std_logic;             --Habilitar para escrever
-        	clkP          : in std_logic;
-        	resetP        : in std_logic;
-		seletorP      : in unsigned(1 downto 0);
-		saidaULA, romOut      : out unsigned(15 downto 0)
+		regnum1P               : in unsigned(2  downto 0);     --Registrador 1 que sera lido
+        	regnum2P               : in unsigned(2  downto 0);     --Registrador 2 que sera lido
+        	wordP                  : in unsigned(15 downto 0);     --O que sera escrito
+        	reg_to_writeP          : in unsigned(2 downto 0);      --Qual reg eh para escrver
+        	write_enableP 	       : in std_logic;             --Habilitar para escrever
+        	clkP, resetP, updatePC : in std_logic;
+		seletorP      	       : in unsigned(1 downto 0);
+		saidaULA, romOut       : out unsigned(15 downto 0)
 	);
 end;
 
@@ -43,8 +42,10 @@ architecture a_processor of processor is
 	component uc is
         port
         (
-            	dataI : in unsigned(6 downto 0);
-	      	dataO : out unsigned(6 downto 0)
+		updatePC    : in std_logic;
+		instruction : in unsigned(15 downto 0);
+            	address     : in unsigned(6 downto 0);
+	      	dataO       : out unsigned(6 downto 0)
         );
     	end component;
 
@@ -66,7 +67,7 @@ architecture a_processor of processor is
         );
 	end component;
 
-   	signal reg_to_entrada1, reg_to_entrada2: unsigned(15 downto 0);  
+   	signal reg_to_entrada1, reg_to_entrada2, romOutS: unsigned(15 downto 0);  
 	signal uc_to_pc, pc_to_ucROM: unsigned(6 downto 0);
 begin
     	U_L_A: ula port map(
@@ -89,8 +90,10 @@ begin
 	);
 
 	U_C: uc port map(
-		dataI => pc_to_ucROM,
-		dataO => uc_to_pc	
+		updatePC    => updatePC,
+		instruction => romOutS,
+		address     => pc_to_ucROM,
+		dataO       => uc_to_pc	
 	); 
 
 	P_C: pc port map(
@@ -104,6 +107,8 @@ begin
 	R_O_M: rom port map(
 		clk     => clkP,
 		address => pc_to_ucRom,
-		data	=> romOut
+		data	=> romOutS
 	);
+
+	romOut<=romOutS;
 end architecture a_processor;
