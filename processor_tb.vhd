@@ -89,11 +89,11 @@ begin
       		wordS <= saidaS;
       		reg_to_writeS <= "011";
       		write_enableS <= '1';
-		wait for 600 ns;
+		wait for 1500 ns;
 		updatePCS <= '0';
                 wait for 50 ns;
                 updatePCS <= '1';
-      		wait for 1000 ns;
+      		wait for 800 ns;
       		resetS <= '1';
       		wait;                     -- <== OBRIGATORIO TERMINAR COM WAIT; !!!
   	end process;

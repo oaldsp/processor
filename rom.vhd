@@ -22,15 +22,15 @@ architecture a_romof of rom is
         	4 => "0000010000000000",
      	   	5 => "0000010100000000",
        		6 => "0000011000000000",
-    	    	7 => "0000011100001011",
+    	    	7 => "0000011100000001",
         	8 => "0000100000000000",
         	9 => "0000100100000000",
 		others => (others=>'0')
 	);
 begin
 	process(clk)
-	begin
-		if(rising_edge(clk)) then
+	begin                              --Aqui é "falling" e nao "rising" para sincronizar
+		if(falling_edge(clk)) then --com a o flipflop da UC que esta em "rising"
 			data <= content_rom(to_integer(address));
 		end if;
 	end process;

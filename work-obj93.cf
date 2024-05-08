@@ -1,49 +1,49 @@
 v 4
-file . "flipflopT_tb.vhdl" "342e71f23bc54bcad73154958bbbd12139b3f733" "20240506005157.106":
-  entity flipflopt_tb at 1( 0) + 0 on 1041;
-  architecture a_flipflopt_tb of flipflopt_tb at 8( 119) + 0 on 1042;
-file . "rom.vhd" "3f8e11ff03941e11931f64ab451da849985592b3" "20240508003950.351":
-  entity rom at 1( 0) + 0 on 1833;
-  architecture a_romof of rom at 13( 218) + 0 on 1834;
-file . "processador_tb.vhd" "4e9eb34ed6d09ac79bb2cf9f1ca99e3542ee137d" "20240501233339.613":
-  entity processador_tb at 1( 0) + 0 on 165;
-  architecture a_processador_tb of processador_tb at 8( 123) + 0 on 166;
-file . "mux32x16.vhd" "47ce747131ed4df757d1ba5d52d064545fd14705" "20240508003950.158":
-  entity mux32x16 at 1( 0) + 0 on 1829;
-  architecture a_mux32x16 of mux32x16 at 14( 294) + 0 on 1830;
-file . "reg16bits.vhd" "f0e546e0605ae8deb406b714253036755d771c5c" "20240508003949.770":
-  entity reg16bits at 1( 0) + 0 on 1821;
-  architecture a_reg16bits of reg16bits at 15( 281) + 0 on 1822;
-file . "ula_tb.vhd" "7648361561a8513a2d9cad03ce4b17f862de836b" "20240414230815.932":
-  entity ula_tb at 1( 0) + 0 on 15;
-  architecture a_ula_tb of ula_tb at 8( 93) + 0 on 16;
-file . "ula.vhd" "4813a8d893cda42a49b3cbbae01c00c23c7c9553" "20240508003950.447":
-  entity ula at 1( 0) + 0 on 1835;
-  architecture a_ula of ula at 14( 274) + 0 on 1836;
-file . "bdr.vhd" "167198a2a1da521ff326b4e87dbd22561aee1e4a" "20240508003950.546":
-  entity bdr at 1( 0) + 0 on 1837;
-  architecture a_bdr of bdr at 19( 664) + 0 on 1838;
-file . "acc.vhd" "a870049a172f7ce186614a8da44b70a90012414f" "20240508003950.257":
-  entity acc at 1( 0) + 0 on 1831;
-  architecture a_acc of acc at 14( 295) + 0 on 1832;
-file . "teste_tb.vhd" "5b456d7b3a73e02c48f97bd71cf8ffa44e856b03" "20240505230036.031":
-  entity teste_tb at 1( 0) + 0 on 689;
-  architecture ateste_tb of teste_tb at 8( 95) + 0 on 690;
-file . "processor.vhd" "0440205e135502d809e6b5b746c76ddb0a2b4cfc" "20240508003950.651":
-  entity processor at 1( 0) + 0 on 1839;
-  architecture a_processor of processor at 18( 701) + 0 on 1840;
-file . "processor_tb.vhd" "3f8d8c1f45928b7a872c4da7567e8828b6037097" "20240508003950.778":
-  entity processor_tb at 1( 0) + 0 on 1841;
-  architecture a_processor_tb of processor_tb at 8( 99) + 0 on 1842;
+file . "uc.vhd" "b4d5c5264d9c83e53ddea45ddeb9b3cd4ea8da29" "20240508012222.524":
+  entity uc at 1( 0) + 0 on 2157;
+  architecture a_uc of uc at 14( 268) + 0 on 2158;
+file . "pc.vhdl" "e3d4c5d89acd98b1aa0203f93e8fc6d7a2d7a0c6" "20240508012222.426":
+  entity pc at 1( 0) + 0 on 2155;
+  architecture a_pc of pc at 15( 315) + 0 on 2156;
+file . "flipflopT.vhdl" "e4fdd7562e09bab7f53e6734dbc495dc618150ac" "20240508012222.331":
+  entity flipflopt at 1( 0) + 0 on 2153;
+  architecture a_flipflopt of flipflopt at 14( 253) + 0 on 2154;
 file . "pc_tb.vhdl" "a159bc317924a3138c43662f7838895e38e5d7aa" "20240506005302.597":
   entity pc_tb at 1( 0) + 0 on 1043;
   architecture a_pc_tb of pc_tb at 8( 92) + 0 on 1044;
-file . "flipflopT.vhdl" "e4fdd7562e09bab7f53e6734dbc495dc618150ac" "20240508003949.868":
-  entity flipflopt at 1( 0) + 0 on 1823;
-  architecture a_flipflopt of flipflopt at 14( 253) + 0 on 1824;
-file . "pc.vhdl" "e3d4c5d89acd98b1aa0203f93e8fc6d7a2d7a0c6" "20240508003949.964":
-  entity pc at 1( 0) + 0 on 1825;
-  architecture a_pc of pc at 15( 315) + 0 on 1826;
-file . "uc.vhd" "b4d5c5264d9c83e53ddea45ddeb9b3cd4ea8da29" "20240508003950.060":
-  entity uc at 1( 0) + 0 on 1827;
-  architecture a_uc of uc at 14( 268) + 0 on 1828;
+file . "processor_tb.vhd" "cd1b7bfaad81dbcf45d93fd87d6edb7be3fc19e3" "20240508012223.249":
+  entity processor_tb at 1( 0) + 0 on 2171;
+  architecture a_processor_tb of processor_tb at 8( 99) + 0 on 2172;
+file . "processor.vhd" "0440205e135502d809e6b5b746c76ddb0a2b4cfc" "20240508012223.121":
+  entity processor at 1( 0) + 0 on 2169;
+  architecture a_processor of processor at 18( 701) + 0 on 2170;
+file . "teste_tb.vhd" "5b456d7b3a73e02c48f97bd71cf8ffa44e856b03" "20240505230036.031":
+  entity teste_tb at 1( 0) + 0 on 689;
+  architecture ateste_tb of teste_tb at 8( 95) + 0 on 690;
+file . "acc.vhd" "a870049a172f7ce186614a8da44b70a90012414f" "20240508012222.719":
+  entity acc at 1( 0) + 0 on 2161;
+  architecture a_acc of acc at 14( 295) + 0 on 2162;
+file . "bdr.vhd" "167198a2a1da521ff326b4e87dbd22561aee1e4a" "20240508012223.015":
+  entity bdr at 1( 0) + 0 on 2167;
+  architecture a_bdr of bdr at 19( 664) + 0 on 2168;
+file . "ula.vhd" "4813a8d893cda42a49b3cbbae01c00c23c7c9553" "20240508012222.914":
+  entity ula at 1( 0) + 0 on 2165;
+  architecture a_ula of ula at 14( 274) + 0 on 2166;
+file . "ula_tb.vhd" "7648361561a8513a2d9cad03ce4b17f862de836b" "20240414230815.932":
+  entity ula_tb at 1( 0) + 0 on 15;
+  architecture a_ula_tb of ula_tb at 8( 93) + 0 on 16;
+file . "reg16bits.vhd" "f0e546e0605ae8deb406b714253036755d771c5c" "20240508012222.232":
+  entity reg16bits at 1( 0) + 0 on 2151;
+  architecture a_reg16bits of reg16bits at 15( 281) + 0 on 2152;
+file . "mux32x16.vhd" "47ce747131ed4df757d1ba5d52d064545fd14705" "20240508012222.623":
+  entity mux32x16 at 1( 0) + 0 on 2159;
+  architecture a_mux32x16 of mux32x16 at 14( 294) + 0 on 2160;
+file . "processador_tb.vhd" "4e9eb34ed6d09ac79bb2cf9f1ca99e3542ee137d" "20240501233339.613":
+  entity processador_tb at 1( 0) + 0 on 165;
+  architecture a_processador_tb of processador_tb at 8( 123) + 0 on 166;
+file . "rom.vhd" "e82259b484f1d725e86c122e8afa1610e7f07abe" "20240508012222.815":
+  entity rom at 1( 0) + 0 on 2163;
+  architecture a_romof of rom at 13( 218) + 0 on 2164;
+file . "flipflopT_tb.vhdl" "342e71f23bc54bcad73154958bbbd12139b3f733" "20240506005157.106":
+  entity flipflopt_tb at 1( 0) + 0 on 1041;
+  architecture a_flipflopt_tb of flipflopt_tb at 8( 119) + 0 on 1042;
