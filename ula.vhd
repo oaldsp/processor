@@ -13,10 +13,8 @@ end entity;
 
 architecture a_ula of ula is
 begin
-	saida <= (entrada1 + entrada2)   when seletor="00" else
-		 (entrada1 - entrada2)   when seletor="01" else
-		 (entrada1 or entrada2)  when seletor="10" else
-		 (entrada1 and entrada2) when seletor="11" else
+	saida <= (entrada1 + entrada2)   when seletor="00" else --ADD
+		 (entrada1 - entrada2)   when seletor="01" else --SUB
 		 "0000000000000000";
 end architecture;
 

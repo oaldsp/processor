@@ -12,7 +12,7 @@ entity sm is
 end entity;
 
 architecture a_sm of sm is
-   	signal stateS: unsigned(1 downto 0);
+   	signal stateS: unsigned(1 downto 0) :=  "00";
 begin
 	FDE <= "100" when stateS="00" else 
 	       "010" when stateS="01" else

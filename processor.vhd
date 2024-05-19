@@ -44,7 +44,14 @@ architecture a_processor of processor is
 		updatePC    : in std_logic;
 		instruction : in unsigned(15 downto 0);
             	address     : in unsigned(6 downto 0);
-	      	dataO       : out unsigned(6 downto 0)
+                cte         : out unsigned(15 downto 0);
+	        isCte       : out std_logic;
+	      	dataO       : out unsigned(6 downto 0);
+		regRead     : out unsigned(2 downto 0);
+                regB        : out unsigned(2 downto 0);
+		word_to_ld  : out unsigned(15 downto 0);
+                reg_to_ld   : out unsigned(2 downto 0);
+                Is_to_ld    : out std_logic
         );
     	end component;
 
@@ -84,34 +91,52 @@ architecture a_processor of processor is
 	);
 	end component;
 
-   	signal reg_to_entrada1, reg_to_entrada2, romOutS, romOutI: unsigned(15 downto 0);  
+	component mux32x16 is
+    		port(
+        	data_in0  : in unsigned(15 downto 0);
+        	data_in1  : in unsigned(15 downto 0);
+        	data_out : out unsigned(15 downto 0);
+        	selec: in STD_LOGIC
+    	);
+	end component; 
+
+   	signal reg_to_mux, cte_to_mux, mux_to_ula, reg_to_entrada2, romOutS, romOutI: unsigned(15 downto 0);  
+	signal uc_to_bdrWord: unsigned(15 downto 0);
 	signal uc_to_pc, pc_to_ucROM: unsigned(6 downto 0);
-	signal FDEs: unsigned(2 downto 0);
+	signal FDEs, regUc_to_bdr, regB_to_bdr, uc_to_bdrReg: unsigned(2 downto 0);
+	signal flag_to_mux, uc_to_bdrIs: std_logic;
 begin
     	U_L_A: ula port map(
-        	entrada1 => reg_to_entrada1,
+        	entrada1 => mux_to_ula,
         	entrada2 => reg_to_entrada2,
        		seletor => "01",
        		saida => saidaULA
     	);
 
    	B_D_R: bdr port map( 
-		reg1_data    => reg_to_entrada1,
+		reg1_data    => reg_to_mux,
         	reg2_data    => reg_to_entrada2,
-        	regnum1      => "001",
-       	 	regnum2      => "010",
-        	word         => "0000000000000111",
-        	reg_to_write => "001",
-        	write_enable => '1',
+        	regnum1      => regUc_to_bdr,
+       	 	regnum2      => regB_to_bdr,
+        	word         => uc_to_bdrWord,
+        	reg_to_write => uc_to_bdrReg,
+        	write_enable => uc_to_bdrIs,
         	clkBD        => clkP,
         	reset        => resetP
 	);
 
 	U_C: uc port map(
-		updatePC    => '1',
+		updatePC    => FDEs(2),
 		instruction => romOutI,
 		address     => pc_to_ucROM,
-		dataO       => uc_to_pc	
+		cte 	    => cte_to_mux,
+		isCte 	    => flag_to_mux,
+		dataO       => uc_to_pc,
+		regRead     => regUc_to_bdr,
+		regB        => regB_to_bdr,
+		word_to_ld  => uc_to_bdrWord,
+                reg_to_ld   => uc_to_bdrReg,
+		Is_to_ld    => uc_to_bdrIs
 	); 
 
 	P_C: pc port map(
@@ -132,7 +157,7 @@ begin
 	I_R: reg16bits port map(
                 clk      => clkP,
                 rst      => resetP,
-                wr_en    => FDEs(2),
+                wr_en    => clkP,
                 data_in  => romOutS,
                 data_out => romOutI
         );
@@ -144,8 +169,15 @@ begin
 		FDE   => FDEs
 	);
 
+	M_U_X: mux32x16 port map(
+		data_in0 => reg_to_mux,
+                data_in1 => cte_to_mux,
+	       	data_out => mux_to_ula,	
+                selec	 => flag_to_mux		
+	);
+
 	pcP           <= pc_to_ucROM;
 	instructionP  <= romOutI;
-	reg1OutP      <= reg_to_entrada1;
+	reg1OutP      <= reg_to_mux;
        	reg2OutP      <= reg_to_entrada2;
 end architecture a_processor;
