@@ -1,0 +1,36 @@
+==INSTRUCTIONS=======================================
+
+-> Processor's instructions description
+
+==NOP================================================
+	 00000|0000|0000|000 -> NOP
+
+==ADD================================================
+	 xxxxx|bbbb|aaaa|001 -> ADD        
+
+aaaa  -> register number A 
+bbbb  -> register number B
+xxxxx -> whatever 	
+
+==SUB================================================
+	 ????????|s|aaaa|010 -> SUB
+	xxxx|bbbb|0|aaaa|010 -> SUB between registers
+	 cccccccc|1|aaaa|010 -> SUB with constant
+
+aaaa     -> register number A           
+bbbb     -> register number B
+xxxxx    -> whatever
+cccccccc -> constant
+
+==LD=================================================
+	 ccccccccc|aaaa|011 -> LD
+
+aaaa     -> register number
+cccccccc -> constant
+	 
+==JMP================================================
+	??????|eeeeeee|100 -> absolute JMP
+
+eeeeeee  -> address 
+
+===================================================== 
