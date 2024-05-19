@@ -14,7 +14,7 @@ architecture a_processor_tb of processor_tb is
                 instructionP       : out unsigned(15 downto 0);
                 reg1OutP, reg2OutP : out unsigned(15 downto 0);
                 --ARRUMAR ACUMULADOR
-                saidaULA           : out unsigned(15 downto 0)
+                saidaUlaP           : out unsigned(15 downto 0)
         );
 	end component; 
    
@@ -41,7 +41,7 @@ begin
 		instructionP => instructionS,
 		reg1OutP     => reg1OutS,
 		reg2OutP     => reg2OutS,
-		saidaULA     => saidaULAs
+		saidaUlaP     => saidaULAs
     	);
  
 	reset_global: process
@@ -70,7 +70,7 @@ begin
     	end process clk_proc;
    	process                      -- sinais dos casos de teste (p.ex.)
    	begin
-      		wait for 2000 ns;
+		wait for 2000 ns;
       		resetS <= '1';
       		wait;                     -- <== OBRIGATORIO TERMINAR COM WAIT; !!!
   	end process;

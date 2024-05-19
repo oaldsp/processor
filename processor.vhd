@@ -10,7 +10,7 @@ entity processor is
 		instructionP       : out unsigned(15 downto 0);    
 		reg1OutP, reg2OutP : out unsigned(15 downto 0);    
 		--ARRUMAR ACUMULADOR
-		saidaULA           : out unsigned(15 downto 0)
+		saidaUlaP          : out unsigned(15 downto 0)
 	);
 end;
 
@@ -50,8 +50,10 @@ architecture a_processor of processor is
 		regRead     : out unsigned(2 downto 0);
                 regB        : out unsigned(2 downto 0);
 		word_to_ld  : out unsigned(15 downto 0);
-                reg_to_ld   : out unsigned(2 downto 0);
-                Is_to_ld    : out std_logic
+                reg_to_w    : out unsigned(2 downto 0);
+                Is_to_w     : out std_logic;
+                Is_to_ld    : out std_logic;
+		ula_sel     : out unsigned(1 downto 0)
         );
     	end component;
 
@@ -101,15 +103,16 @@ architecture a_processor of processor is
 	end component; 
 
    	signal reg_to_mux, cte_to_mux, mux_to_ula, reg_to_entrada2, romOutS, romOutI: unsigned(15 downto 0);  
-	signal uc_to_bdrWord: unsigned(15 downto 0);
+	signal mux_to_bdrWord, uc_to_mux, saidaULA: unsigned(15 downto 0);
 	signal uc_to_pc, pc_to_ucROM: unsigned(6 downto 0);
 	signal FDEs, regUc_to_bdr, regB_to_bdr, uc_to_bdrReg: unsigned(2 downto 0);
-	signal flag_to_mux, uc_to_bdrIs: std_logic;
+	signal ula_selS: unsigned(1 downto 0);
+	signal flag_to_mux, uc_to_bdrIs, uc_to_muxLd: std_logic;
 begin
     	U_L_A: ula port map(
         	entrada1 => mux_to_ula,
         	entrada2 => reg_to_entrada2,
-       		seletor => "01",
+       		seletor => ula_selS,	
        		saida => saidaULA
     	);
 
@@ -118,7 +121,7 @@ begin
         	reg2_data    => reg_to_entrada2,
         	regnum1      => regUc_to_bdr,
        	 	regnum2      => regB_to_bdr,
-        	word         => uc_to_bdrWord,
+        	word         => mux_to_bdrWord,
         	reg_to_write => uc_to_bdrReg,
         	write_enable => uc_to_bdrIs,
         	clkBD        => clkP,
@@ -126,7 +129,7 @@ begin
 	);
 
 	U_C: uc port map(
-		updatePC    => FDEs(2),
+		updatePC    => clkP, --FDEs(2)
 		instruction => romOutI,
 		address     => pc_to_ucROM,
 		cte 	    => cte_to_mux,
@@ -134,9 +137,11 @@ begin
 		dataO       => uc_to_pc,
 		regRead     => regUc_to_bdr,
 		regB        => regB_to_bdr,
-		word_to_ld  => uc_to_bdrWord,
-                reg_to_ld   => uc_to_bdrReg,
-		Is_to_ld    => uc_to_bdrIs
+		word_to_ld  => uc_to_mux,
+                reg_to_w    => uc_to_bdrReg,
+		Is_to_w     => uc_to_bdrIs,
+		Is_to_ld    => uc_to_muxLd,
+		ula_sel     => ula_selS
 	); 
 
 	P_C: pc port map(
@@ -148,7 +153,7 @@ begin
 	);
 
 	R_O_M: rom port map(
-		clk     => clkP,
+		clk     => clkP, --FDEs(2)
 		address => pc_to_ucRom,
 		data	=> romOutS
 	);
@@ -157,7 +162,7 @@ begin
 	I_R: reg16bits port map(
                 clk      => clkP,
                 rst      => resetP,
-                wr_en    => clkP,
+                wr_en    => clkP,  --FDEs(2)
                 data_in  => romOutS,
                 data_out => romOutI
         );
@@ -169,15 +174,23 @@ begin
 		FDE   => FDEs
 	);
 
-	M_U_X: mux32x16 port map(
+	M_U_X_C: mux32x16 port map(
 		data_in0 => reg_to_mux,
                 data_in1 => cte_to_mux,
 	       	data_out => mux_to_ula,	
                 selec	 => flag_to_mux		
 	);
 
+	M_U_X_L: mux32x16 port map(
+                data_in0 => saidaULA,
+                data_in1 => uc_to_mux,
+                data_out => mux_to_bdrWord,
+                selec    => uc_to_muxLd
+        );
+
 	pcP           <= pc_to_ucROM;
 	instructionP  <= romOutI;
 	reg1OutP      <= reg_to_mux;
        	reg2OutP      <= reg_to_entrada2;
+	saidaUlaP      <= saidaULA;
 end architecture a_processor;

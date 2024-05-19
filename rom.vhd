@@ -16,10 +16,13 @@ architecture a_romof of rom is
 	--  conteudo|endereco para pular|pula ou não
 	constant content_rom : mem := (
 		0 => B"0000000000000_000",
-        	1 => B"0000000101_011_011",  -- li r3, 5
-        	2 => B"0000001000000_000",
-        	3 => B"0000001100000_000",
-        	4 => B"0000010000000_000",
+		--A. Carrega R3 (o registrador 3) com o valor 5
+        	1 => B"0000000101_011_011",   -- li r3, 5
+        	--B. Carrega R4 com 8
+		2 => B"0000001000_100_011",   -- li r4, 8
+        	--C. Soma R3 com R4 e guarda em R5
+		3 => B"0000_101_100_011_001", -- add r5, r4, r3
+        	4 => B"0000000101_011_011",
      	   	5 => B"0000010100000_000",
        		6 => B"0000011000000_000",
     	    	7 => B"0000011100000_001",

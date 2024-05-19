@@ -1,14 +1,14 @@
 [*]
 [*] GTKWave Analyzer v3.3.103 (w)1999-2019 BSI
-[*] Sun May 19 14:14:42 2024
+[*] Sun May 19 14:45:47 2024
 [*]
 [dumpfile] "/home/otavio/Desktop/processor/processor_tb.ghw"
-[dumpfile_mtime] "Sun May 19 14:12:45 2024"
-[dumpfile_size] 7233
+[dumpfile_mtime] "Sun May 19 14:45:04 2024"
+[dumpfile_size] 7348
 [savefile] "/home/otavio/Desktop/processor/SIMULACAO.gtkw"
 [timestart] 0
 [size] 1000 600
-[pos] -1 -1
+[pos] -194 -54
 *-28.000000 0 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
 [treeopen] top.
 [treeopen] top.processor_tb.pro.
@@ -21,7 +21,6 @@
 [color] 3
 top.processor_tb.clk
 @200
--Percorrer ROM
 -Registers
 -Register 0
 @22
