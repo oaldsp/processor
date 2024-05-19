@@ -4,14 +4,13 @@ use ieee.numeric_std.all;
 
 entity processor is
 	port(
-		regnum1P               : in unsigned(2  downto 0);     --Registrador 1 que sera lido
-        	regnum2P               : in unsigned(2  downto 0);     --Registrador 2 que sera lido
-        	wordP                  : in unsigned(15 downto 0);     --O que sera escrito
-        	reg_to_writeP          : in unsigned(2 downto 0);      --Qual reg eh para escrver
-        	write_enableP 	       : in std_logic;             --Habilitar para escrever
-        	clkP, resetP, updatePC : in std_logic;
-		seletorP      	       : in unsigned(1 downto 0);
-		saidaULA, romOut       : out unsigned(15 downto 0)
+		resetP, clkP       : in std_logic;
+		stateP             : out unsigned(1 downto 0);    
+		pcP                : out unsigned(6 downto 0);
+		instructionP       : out unsigned(15 downto 0);    
+		reg1OutP, reg2OutP : out unsigned(15 downto 0);    
+		--ARRUMAR ACUMULADOR
+		saidaULA           : out unsigned(15 downto 0)
 	);
 end;
 
@@ -67,31 +66,50 @@ architecture a_processor of processor is
         );
 	end component;
 
-   	signal reg_to_entrada1, reg_to_entrada2, romOutS: unsigned(15 downto 0);  
+	component reg16bits is
+		port(
+		clk      : in std_logic;
+		rst      : in std_logic;
+		wr_en    : in std_logic;
+		data_in  : in unsigned(15 downto 0);
+		data_out : out unsigned(15 downto 0)	    
+	);
+	end component;
+
+	component sm is
+		port(
+		clk, rst: in std_logic;
+		state: out unsigned(1 downto 0);
+		FDE: out unsigned(2 downto 0)
+	);
+	end component;
+
+   	signal reg_to_entrada1, reg_to_entrada2, romOutS, romOutI: unsigned(15 downto 0);  
 	signal uc_to_pc, pc_to_ucROM: unsigned(6 downto 0);
+	signal FDEs: unsigned(2 downto 0);
 begin
     	U_L_A: ula port map(
         	entrada1 => reg_to_entrada1,
         	entrada2 => reg_to_entrada2,
-       		seletor => seletorP,
+       		seletor => "01",
        		saida => saidaULA
     	);
 
    	B_D_R: bdr port map( 
-		reg1_data => reg_to_entrada1,
-        	reg2_data => reg_to_entrada2,
-        	regnum1   => regnum1P,
-       	 	regnum2   => regnum2P,
-        	word      => wordP,
-        	reg_to_write => reg_to_writeP,
-        	write_enable => write_enableP,
+		reg1_data    => reg_to_entrada1,
+        	reg2_data    => reg_to_entrada2,
+        	regnum1      => "001",
+       	 	regnum2      => "010",
+        	word         => "0000000000000111",
+        	reg_to_write => "001",
+        	write_enable => '1',
         	clkBD        => clkP,
         	reset        => resetP
 	);
 
 	U_C: uc port map(
-		updatePC    => updatePC,
-		instruction => romOutS,
+		updatePC    => '1',
+		instruction => romOutI,
 		address     => pc_to_ucROM,
 		dataO       => uc_to_pc	
 	); 
@@ -110,5 +128,24 @@ begin
 		data	=> romOutS
 	);
 
-	romOut<=romOutS;
+	--Intruction register
+	I_R: reg16bits port map(
+                clk      => clkP,
+                rst      => resetP,
+                wr_en    => FDEs(2),
+                data_in  => romOutS,
+                data_out => romOutI
+        );
+	
+	S_M: sm port map(
+		clk   => clkP,
+                rst   => resetP,
+		state => stateP,
+		FDE   => FDEs
+	);
+
+	pcP           <= pc_to_ucROM;
+	instructionP  <= romOutI;
+	reg1OutP      <= reg_to_entrada1;
+       	reg2OutP      <= reg_to_entrada2;
 end architecture a_processor;

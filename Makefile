@@ -1,6 +1,9 @@
 all:
 	ghdl -a reg16bits.vhd 
-	ghdl -e reg16bits 
+	ghdl -e reg16bits
+
+	ghdl -a sm.vhd
+	ghdl -e sm	
 
 	ghdl -a flipflopT.vhdl
 	ghdl -e flipflopT
@@ -20,8 +23,8 @@ all:
 	ghdl -a rom.vhd
 	ghdl -e rom
 	
-	ghdl -a  ula.vhd 
-	ghdl -e  ula
+	ghdl -a ula.vhd 
+	ghdl -e ula
 	
 	ghdl -a bdr.vhd 
 	ghdl -e bdr	
