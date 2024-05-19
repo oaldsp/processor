@@ -15,7 +15,7 @@ architecture a_romof of rom is
 	--  00000000|0000000            |0
 	--  conteudo|endereco para pular|pula ou não
 	constant content_rom : mem := (
-		0  => B"0000000000000_000",
+		0  => B"0000000101_011_011",	-- li r3, 5
 		--A. Carrega R3 (o registrador 3) com o valor 5
         	1  => B"0000000101_011_011",    -- li r3, 5
         	--B. Carrega R4 com 8
@@ -28,14 +28,12 @@ architecture a_romof of rom is
      	   	5  => B"0000000010100_100",	-- jal r0, 20
 		--F. Zera R5 (nunca será executada)
        		6  => B"000_101_101_0_101_010", -- sub r5, r5, r5
-    	    	20 => B"0000_101_100_011_001",
-        	21 => B"0000100000000_000",
-        	22 => B"0000100100000_000",
-		23 => B"0000100100000_000",
-                24 => B"0000100100000_000",
-                25 => B"0000100100000_000",
-                26 => B"0000100100000_000",
-                27 => B"0000100100000_000",
+		--G. No endereço 20, copia R5 para R3
+    	    	20 => B"000000_011_1_101_010",  -- subi r3, r5, 0
+		--H. Salta para o passo C desta lista (R5 <= R3+R4)
+        	21 => B"0000000000011_100",     -- jal r0, 3
+		--I. Zera R3 (nunca será executada)
+        	22 => B"000_011_011_0_011_010", -- sub r3, r3, r3
 		others => (others=>'0')
 	);
 begin

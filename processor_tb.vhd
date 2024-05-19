@@ -70,7 +70,7 @@ begin
     	end process clk_proc;
    	process                      -- sinais dos casos de teste (p.ex.)
    	begin
-		wait for 2000 ns;
+		wait for 3000 ns;
       		resetS <= '1';
       		wait;                     -- <== OBRIGATORIO TERMINAR COM WAIT; !!!
   	end process;
