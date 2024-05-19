@@ -110,8 +110,8 @@ architecture a_processor of processor is
 	signal flag_to_mux, uc_to_bdrIs, uc_to_muxLd: std_logic;
 begin
     	U_L_A: ula port map(
-        	entrada1 => mux_to_ula,
-        	entrada2 => reg_to_entrada2,
+        	entrada1 => reg_to_entrada2,
+        	entrada2 => mux_to_ula,
        		seletor => ula_selS,	
        		saida => saidaULA
     	);
@@ -192,5 +192,5 @@ begin
 	instructionP  <= romOutI;
 	reg1OutP      <= reg_to_mux;
        	reg2OutP      <= reg_to_entrada2;
-	saidaUlaP      <= saidaULA;
+	saidaUlaP     <= saidaULA;
 end architecture a_processor;

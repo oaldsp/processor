@@ -41,34 +41,45 @@ begin
 	word_to_ld <= ("000000" & instruction(15 downto 6)) when instruction(2 downto 0) = "011" else
 		      "0000000000000000";
 
-	Is_to_ld   <= '1' when instruction(2 downto 0) = "011" else  
+	Is_to_ld   <= '1' when ((instruction(2 downto 0) = "010")and(instruction(6)='0')) or
+		      	         instruction(2 downto 0) = "011" else
 		      '0';
 
 	--Mover PC
-	dataO <= address	   when dataFFT='0' else
+	dataO <= instruction(9 downto 3) when instruction(2 downto 0) = "100" else
+		 address	   when dataFFT='0' else
         	 address+"0000001" when dataFFT='1' else
 		"0000000";
 
-	--ADD
-	regRead <= instruction(5 downto 3) when instruction(2 downto 0) = "001" else
-		   "000";
-       	
-	regB    <= instruction(8 downto 6) when instruction(2 downto 0) = "001" else
-                   "000";
-
 	--SUB
-	isCte <= '1' when (instruction(2 downto 0) = "010")and(instruction(6) = '1') else
+	isCte <= '1' when (instruction(2 downto 0) = "010")and(instruction(6)='1') else
        		 '0';
 
+	cte <= ("0000000000" & instruction(15 downto 10)) when (instruction(2 downto 0) = "010")and(instruction(6)='1') else
+               "0000000000000000";
+	
 	--Misturando operacoes
 	ula_sel <= "00" when instruction(2 downto 0) = "001" else
+		   "01" when instruction(2 downto 0) = "010" else
 		   "01";
 
-	reg_to_w <= instruction(5 downto 3) when instruction(2 downto 0) = "011" else
-		    instruction(11 downto 9) when instruction(2 downto 0) = "001" else
+	reg_to_w <= instruction(12 downto 10) when (instruction(2 downto 0) = "010")and(instruction(6)='0') else
+		    instruction(9 downto 7) when (instruction(2 downto 0) = "010")and(instruction(6)='1') else
+                    instruction(11 downto 9) when instruction(2 downto 0) = "001" else
+		    instruction(5 downto 3) when instruction(2 downto 0) = "011" else
                     "000";
 
-	Is_to_w   <= '1' when (instruction(2 downto 0) = "011")or(instruction(2 downto 0) = "001") else
+	Is_to_w   <= '1' when (dataFFT='1')and((instruction(2 downto 0) = "011")or
+		     	      		       (instruction(2 downto 0) = "001")or
+			      		       (instruction(2 downto 0) = "010")) else
                       '0';
+
+	regRead <= instruction(9 downto 7) when (instruction(2 downto 0) = "010")and(instruction(6)='0') else
+		   instruction(5 downto 3) when (instruction(2 downto 0) = "001") else
+                   "000";
+	
+	regB    <= instruction(8 downto 6) when instruction(2 downto 0) = "001" else
+                   instruction(5 downto 3) when instruction(2 downto 0) = "010" else
+                   "000";
 
 end architecture a_uc;

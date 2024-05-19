@@ -30,8 +30,8 @@ cccccc -> constant
 aaa       -> register number
 ccccccccc -> constant
 	 
-==JMP================================================
-	  ??????|eeeeeee|100 -> absolute JMP
+==JAL================================================
+	  ??????|eeeeeee|100 -> absolute JAL
 
 eeeeeee  -> address 
 
