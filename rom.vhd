@@ -21,19 +21,21 @@ architecture a_romof of rom is
         	--B. Carrega R4 com 8
 		2  => B"0000001000_100_011",    -- li r4, 8
         	--C. Soma R3 com R4 e guarda em R5
-		3  => B"0000_101_100_011_001",  -- add r5, r4, r3
-		--D. Subtrai 1 de R5
-        	4  => B"000001_101_1_101_010",  -- subi r5, r5, 1
+		3  => B"000000000_0_011_101",   -- mov a, r3
+		--4  => B"0000_101_100_011_001",  -- add r5, r4, r3
+		--5  => B"0000_101_100_011_001",  -- add r5, r4, r3
+  		--D. Subtrai 1 de R5
+        	--4  => B"000001_101_1_101_010",  -- subi r5, r5, 1
 		--E. Salta para o endereço 20   
-     	   	5  => B"0000000010100_100",	-- jal r0, 20
+     	   	--5  => B"0000000010100_100",	-- jal r0, 20
 		--F. Zera R5 (nunca será executada)
-       		6  => B"000_101_101_0_101_010", -- sub r5, r5, r5
+       		--6  => B"000_101_101_0_101_010", -- sub r5, r5, r5
 		--G. No endereço 20, copia R5 para R3
-    	    	20 => B"000000_011_1_101_010",  -- subi r3, r5, 0
+    	    	--20 => B"000000_011_1_101_010",  -- subi r3, r5, 0
 		--H. Salta para o passo C desta lista (R5 <= R3+R4)
-        	21 => B"0000000000011_100",     -- jal r0, 3
+        	--21 => B"0000000000011_100",     -- jal r0, 3
 		--I. Zera R3 (nunca será executada)
-        	22 => B"000_011_011_0_011_010", -- sub r3, r3, r3
+        	--22 => B"000_011_011_0_011_010", -- sub r3, r3, r3
 		others => (others=>'0')
 	);
 begin

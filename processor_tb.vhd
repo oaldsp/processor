@@ -12,7 +12,7 @@ architecture a_processor_tb of processor_tb is
                 stateP             : out unsigned(1 downto 0);
                 pcP                : out unsigned(6 downto 0);
                 instructionP       : out unsigned(15 downto 0);
-                reg1OutP, reg2OutP : out unsigned(15 downto 0);
+                ulaIn1P, ulaIn2P : out unsigned(15 downto 0);
                 --ARRUMAR ACUMULADOR
                 saidaUlaP           : out unsigned(15 downto 0)
         );
@@ -29,7 +29,7 @@ architecture a_processor_tb of processor_tb is
 	signal stateS             : unsigned(1 downto 0);
         signal pcS                : unsigned(6 downto 0);
         signal instructionS       : unsigned(15 downto 0);
-        signal reg1OutS, reg2OutS : unsigned(15 downto 0);
+        signal ulaIn1S, ulaIn2S : unsigned(15 downto 0);
         --ARRUMAR ACUMULADOR
         signal saidaULAs          : unsigned(15 downto 0);
 begin
@@ -39,8 +39,8 @@ begin
 		stateP       => stateS,
 		pcP	     => pcS,
 		instructionP => instructionS,
-		reg1OutP     => reg1OutS,
-		reg2OutP     => reg2OutS,
+		ulaIn1P     => ulaIn1S,
+		ulaIn2P     => ulaIn2S,
 		saidaUlaP     => saidaULAs
     	);
  

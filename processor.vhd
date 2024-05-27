@@ -8,7 +8,7 @@ entity processor is
 		stateP             : out unsigned(1 downto 0);    
 		pcP                : out unsigned(6 downto 0);
 		instructionP       : out unsigned(15 downto 0);    
-		reg1OutP, reg2OutP : out unsigned(15 downto 0);    
+		ulaIn1P, ulaIn2P   : out unsigned(15 downto 0);    
 		--ARRUMAR ACUMULADOR
 		saidaUlaP          : out unsigned(15 downto 0)
 	);
@@ -17,15 +17,13 @@ end;
 architecture a_processor of processor is
 	component bdr is
 	port(
-        	regnum1      : in unsigned(2  downto 0);     --Registrador 1 que sera lido
-		regnum2      : in unsigned(2  downto 0);     --Registrador 2 que sera lido
+        	regnum      : in unsigned(2  downto 0);     --Registrador que sera lido
         	word         : in unsigned(15 downto 0);     --O que sera escrito
         	reg_to_write : in unsigned(2 downto 0);      --Qual reg eh para escrver
         	write_enable : in std_logic;             --Habilitar para escrever
         	clkBD        : in std_logic;
         	reset        : in std_logic;
-       		reg1_data    : out unsigned(15 downto 0);     --Informacao que esta no reg
-       		reg2_data    : out unsigned(15 downto 0)     --Informacao que esta no reg
+       		reg_data    : out unsigned(15 downto 0)     --Informacao que esta no reg
     	);
 	end component;
        
@@ -48,7 +46,7 @@ architecture a_processor of processor is
 	        isCte       : out std_logic;
 	      	dataO       : out unsigned(6 downto 0);
 		regRead     : out unsigned(2 downto 0);
-                regB        : out unsigned(2 downto 0);
+                --regB        : out unsigned(2 downto 0);
 		word_to_ld  : out unsigned(15 downto 0);
                 reg_to_w    : out unsigned(2 downto 0);
                 Is_to_w     : out std_logic;
@@ -102,25 +100,23 @@ architecture a_processor of processor is
     	);
 	end component; 
 
-   	signal reg_to_mux, cte_to_mux, mux_to_ula, reg_to_entrada2, romOutS, romOutI: unsigned(15 downto 0);  
-	signal mux_to_bdrWord, uc_to_mux, saidaULA: unsigned(15 downto 0);
+   	signal reg_to_mux, cte_to_mux, mux_to_ula, romOutS, romOutI: unsigned(15 downto 0);  
+	signal mux_to_bdrWord, uc_to_mux, saidaULA, acc_to_ula: unsigned(15 downto 0);
 	signal uc_to_pc, pc_to_ucROM: unsigned(6 downto 0);
-	signal FDEs, regUc_to_bdr, regB_to_bdr, uc_to_bdrReg: unsigned(2 downto 0);
+	signal FDEs, regUc_to_bdr, uc_to_bdrReg: unsigned(2 downto 0);
 	signal ula_selS: unsigned(1 downto 0);
 	signal flag_to_mux, uc_to_bdrIs, uc_to_muxLd: std_logic;
 begin
     	U_L_A: ula port map(
-        	entrada1 => reg_to_entrada2,
+        	entrada1 => acc_to_ula,
         	entrada2 => mux_to_ula,
        		seletor => ula_selS,	
        		saida => saidaULA
     	);
 
    	B_D_R: bdr port map( 
-		reg1_data    => reg_to_mux,
-        	reg2_data    => reg_to_entrada2,
-        	regnum1      => regUc_to_bdr,
-       	 	regnum2      => regB_to_bdr,
+		reg_data    => reg_to_mux,
+        	regnum      => regUc_to_bdr,
         	word         => mux_to_bdrWord,
         	reg_to_write => uc_to_bdrReg,
         	write_enable => uc_to_bdrIs,
@@ -136,7 +132,7 @@ begin
 		isCte 	    => flag_to_mux,
 		dataO       => uc_to_pc,
 		regRead     => regUc_to_bdr,
-		regB        => regB_to_bdr,
+		--regB        => ,
 		word_to_ld  => uc_to_mux,
                 reg_to_w    => uc_to_bdrReg,
 		Is_to_w     => uc_to_bdrIs,
@@ -167,6 +163,15 @@ begin
                 data_out => romOutI
         );
 	
+       	--Accumulator
+        A_C_C: reg16bits port map(
+                clk      => clkP,
+                rst      => resetP,
+                wr_en    => clkP,  --FDEs(2)
+                data_in  => saidaULA,
+                data_out => acc_to_ula
+        );
+	
 	S_M: sm port map(
 		clk   => clkP,
                 rst   => resetP,
@@ -190,7 +195,7 @@ begin
 
 	pcP           <= pc_to_ucROM;
 	instructionP  <= romOutI;
-	reg1OutP      <= reg_to_mux;
-       	reg2OutP      <= reg_to_entrada2;
+	ulaIn1P       <= reg_to_mux;
+       	ulaIn2P       <= acc_to_ula;
 	saidaUlaP     <= saidaULA;
 end architecture a_processor;

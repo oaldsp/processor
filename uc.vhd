@@ -11,7 +11,7 @@ entity uc is
 		isCte	    : out std_logic;
 	      	dataO       : out unsigned(6 downto 0);
 		regRead	    : out unsigned(2 downto 0);
-		regB        : out unsigned(2 downto 0);
+		--regB        : out unsigned(2 downto 0);
 		word_to_ld  : out unsigned(15 downto 0);
 		reg_to_w    : out unsigned(2 downto 0);
 		Is_to_w     : out std_logic;
@@ -63,23 +63,18 @@ begin
 		   "01" when instruction(2 downto 0) = "010" else
 		   "01";
 
-	reg_to_w <= instruction(12 downto 10) when (instruction(2 downto 0) = "010")and(instruction(6)='0') else
-		    instruction(9 downto 7) when (instruction(2 downto 0) = "010")and(instruction(6)='1') else
-                    instruction(11 downto 9) when instruction(2 downto 0) = "001" else
-		    instruction(5 downto 3) when instruction(2 downto 0) = "011" else
+	reg_to_w <= instruction(5 downto 3) when instruction(2 downto 0) = "011" else
                     "000";
 
-	Is_to_w   <= '1' when (dataFFT='1')and((instruction(2 downto 0) = "011")or
-		     	      		       (instruction(2 downto 0) = "001")or
-			      		       (instruction(2 downto 0) = "010")) else
+	Is_to_w   <= '1' when (dataFFT='1')and((instruction(2 downto 0) = "011") else
                       '0';
 
 	regRead <= instruction(9 downto 7) when (instruction(2 downto 0) = "010")and(instruction(6)='0') else
 		   instruction(5 downto 3) when (instruction(2 downto 0) = "001") else
                    "000";
 	
-	regB    <= instruction(8 downto 6) when instruction(2 downto 0) = "001" else
-                   instruction(5 downto 3) when instruction(2 downto 0) = "010" else
-                   "000";
+	--regB    <= instruction(8 downto 6) when instruction(2 downto 0) = "001" else
+        --           instruction(5 downto 3) when instruction(2 downto 0) = "010" else
+        --           "000";
 
 end architecture a_uc;

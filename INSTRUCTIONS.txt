@@ -5,34 +5,38 @@
 ==NOP================================================
 	    0000000000000|000 -> NOP
 
-==ADD================================================
-	 xxxx|ddd|bbb|aaa|001 -> ADD        
+*==ADD================================================
+	   xxxxxxxxxx|rrr|001 -> ADD        
 
-aaa -> register number A 
-bbb -> register number B
-ddd -> destination register 
-xxx -> whatever 	
+rrr        -> register number  
+xxxxxxxxxx -> whatever 	
 
-==SUB================================================
-	  ?????????|s|aaa|010 -> SUB
-	xxx|ddd|bbb|0|aaa|010 -> SUB between registers
-	 cccccc|ddd|1|aaa|010 -> SUB with constant
+*==SUB================================================
+	  ?????????|s|rrr|010 -> SUB
+	  xxxxxxxxx|0|rrr|010 -> SUB with accumulator
+	  ccccccccc|1|rrr|010 -> SUB with constant
 
-aaa    -> register number A           
-bbb    -> register number B
-ddd    -> destination register
-xxx    -> whatever
-cccccc -> constant
-
-==LD=================================================
-	  cccccccccc|aaa|011 -> LD
-
-aaa       -> register number
+rrr       -> register number           
+xxxxxxxxx -> whatever
 ccccccccc -> constant
-	 
-==JAL================================================
-	  ??????|eeeeeee|100 -> absolute JAL
 
-eeeeeee  -> address 
+*==LD=================================================
+	    ccccccccccccc|011 -> LD
+
+ccccccccccccc -> constant
+
+==JAL================================================
+	   ??????|eeeeeee|100 -> absolute JAL
+
+eeeeeee -> address 
+
+*==MOV================================================
+	 xxxxxxxxxx|d|aaa|101 -> MOV
+	 		   |0| -> save in accumulator
+	 		   |1| -> save in register
+
+d 		   -> destination
+aaa        -> register number	  
+xxxxxxxxxx -> whatever
 
 ===================================================== 
