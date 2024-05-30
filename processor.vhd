@@ -9,7 +9,6 @@ entity processor is
 		pcP                : out unsigned(6 downto 0);
 		instructionP       : out unsigned(15 downto 0);    
 		ulaIn1P, ulaIn2P   : out unsigned(15 downto 0);    
-		--ARRUMAR ACUMULADOR
 		saidaUlaP          : out unsigned(15 downto 0)
 	);
 end;
