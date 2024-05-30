@@ -50,7 +50,8 @@ architecture a_processor of processor is
 		word_to_ld  : out unsigned(15 downto 0);
                 reg_to_w    : out unsigned(2 downto 0);
                 Is_to_w     : out std_logic;
-                Is_to_ld    : out std_logic;
+                Is_to_ld    : out std_logic;	     
+     		w_acc    : out std_logic;
 		ula_sel     : out unsigned(1 downto 0)
         );
     	end component;
@@ -101,11 +102,11 @@ architecture a_processor of processor is
 	end component; 
 
    	signal reg_to_mux, cte_to_mux, mux_to_ula, romOutS, romOutI: unsigned(15 downto 0);  
-	signal mux_to_bdrWord, uc_to_mux, saidaULA, acc_to_ula: unsigned(15 downto 0);
+	signal uc_to_mux, saidaULA, acc_to_ula, mux_to_acc: unsigned(15 downto 0);
 	signal uc_to_pc, pc_to_ucROM: unsigned(6 downto 0);
 	signal FDEs, regUc_to_bdr, uc_to_bdrReg: unsigned(2 downto 0);
 	signal ula_selS: unsigned(1 downto 0);
-	signal flag_to_mux, uc_to_bdrIs, uc_to_muxLd: std_logic;
+	signal flag_to_mux, uc_to_bdrIs, uc_to_muxLd, w_accS: std_logic;
 begin
     	U_L_A: ula port map(
         	entrada1 => acc_to_ula,
@@ -117,7 +118,7 @@ begin
    	B_D_R: bdr port map( 
 		reg_data    => reg_to_mux,
         	regnum      => regUc_to_bdr,
-        	word         => mux_to_bdrWord,
+        	word         => saidaULA,
         	reg_to_write => uc_to_bdrReg,
         	write_enable => uc_to_bdrIs,
         	clkBD        => clkP,
@@ -137,6 +138,7 @@ begin
                 reg_to_w    => uc_to_bdrReg,
 		Is_to_w     => uc_to_bdrIs,
 		Is_to_ld    => uc_to_muxLd,
+		w_acc       => w_accS,
 		ula_sel     => ula_selS
 	); 
 
@@ -167,8 +169,8 @@ begin
         A_C_C: reg16bits port map(
                 clk      => clkP,
                 rst      => resetP,
-                wr_en    => clkP,  --FDEs(2)
-                data_in  => saidaULA,
+                wr_en    => w_accS,  
+                data_in  => mux_to_acc,
                 data_out => acc_to_ula
         );
 	
@@ -185,11 +187,11 @@ begin
 	       	data_out => mux_to_ula,	
                 selec	 => flag_to_mux		
 	);
-
-	M_U_X_L: mux32x16 port map(
+	
+	M_U_X_A_C_C: mux32x16 port map(
                 data_in0 => saidaULA,
                 data_in1 => uc_to_mux,
-                data_out => mux_to_bdrWord,
+                data_out => mux_to_acc,
                 selec    => uc_to_muxLd
         );
 

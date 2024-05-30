@@ -5,22 +5,22 @@
 ==NOP================================================
 	    0000000000000|000 -> NOP
 
-*==ADD================================================
+==ADD================================================
 	   xxxxxxxxxx|rrr|001 -> ADD        
 
 rrr        -> register number  
 xxxxxxxxxx -> whatever 	
 
-*==SUB================================================
+==SUB================================================
 	  ?????????|s|rrr|010 -> SUB
-	  xxxxxxxxx|0|rrr|010 -> SUB with accumulator
-	  ccccccccc|1|rrr|010 -> SUB with constant
+	  xxxxxxxxx|rrr|0|010 -> SUB with register 
+	   cccccccccccc|1|010 -> SUB with constant
 
-rrr       -> register number           
-xxxxxxxxx -> whatever
-ccccccccc -> constant
+rrr          -> register number           
+xxxxxxxxx    -> whatever
+cccccccccccc -> constant
 
-*==LD=================================================
+==LD=================================================
 	    ccccccccccccc|011 -> LD
 
 ccccccccccccc -> constant
@@ -30,7 +30,7 @@ ccccccccccccc -> constant
 
 eeeeeee -> address 
 
-*==MOV================================================
+==MOV================================================
 	 xxxxxxxxxx|d|aaa|101 -> MOV
 	 		   |0| -> save in accumulator
 	 		   |1| -> save in register

@@ -16,6 +16,7 @@ entity uc is
 		reg_to_w    : out unsigned(2 downto 0);
 		Is_to_w     : out std_logic;
 		Is_to_ld    : out std_logic;
+		w_acc       : out std_logic;
 		ula_sel     : out unsigned(1 downto 0)
 	);
 end entity;
@@ -37,11 +38,10 @@ begin
 		data_out => dataFFT
 	);
 	
-	--LD
-	word_to_ld <= ("000000" & instruction(15 downto 6)) when instruction(2 downto 0) = "011" else
+	word_to_ld <= ("000" & instruction(15 downto 3)) when instruction(2 downto 0) = "011" else
 		      "0000000000000000";
 
-	Is_to_ld   <= '1' when ((instruction(2 downto 0) = "010")and(instruction(6)='0')) or
+	Is_to_ld   <= '1' when --((instruction(2 downto 0) = "010")and(instruction(6)='0')) or
 		      	         instruction(2 downto 0) = "011" else
 		      '0';
 
@@ -51,28 +51,37 @@ begin
         	 address+"0000001" when dataFFT='1' else
 		"0000000";
 
-	--SUB
-	isCte <= '1' when (instruction(2 downto 0) = "010")and(instruction(6)='1') else
+	isCte <= '1' when (instruction(2 downto 0) = "010")and(instruction(3)='1') else
        		 '0';
 
-	cte <= ("0000000000" & instruction(15 downto 10)) when (instruction(2 downto 0) = "010")and(instruction(6)='1') else
+	cte <= ("0000" & instruction(15 downto 4)) when (instruction(2 downto 0) = "010")and(instruction(4)='1') else
                "0000000000000000";
 	
-	--Misturando operacoes
-	ula_sel <= "00" when instruction(2 downto 0) = "001" else
-		   "01" when instruction(2 downto 0) = "010" else
-		   "01";
+	ula_sel <= "00" when (instruction(2 downto 0) = "101")and(instruction(6) = '1') else
+                   "01" when ((instruction(2 downto 0) = "101")or
+		   	      (instruction(2 downto 0) = "011"))and(instruction(6) = '0') else
+		   "10" when instruction(2 downto 0) = "001" else
+		   "11" when instruction(2 downto 0) = "010";
 
-	reg_to_w <= instruction(5 downto 3) when instruction(2 downto 0) = "011" else
+	reg_to_w <= instruction(5 downto 3) when (instruction(2 downto 0) = "011")or
+		    ((instruction(2 downto 0) = "101")and(instruction(6) = '1')) else
                     "000";
 
-	Is_to_w   <= '1' when (dataFFT='1')and((instruction(2 downto 0) = "011") else
-                      '0';
+	Is_to_w <= '1' when (dataFFT='1')and((instruction(2 downto 0) = "011")or
+		   ((instruction(2 downto 0) = "101")and(instruction(6) = '1'))) else
+                   '0';
 
-	regRead <= instruction(9 downto 7) when (instruction(2 downto 0) = "010")and(instruction(6)='0') else
-		   instruction(5 downto 3) when (instruction(2 downto 0) = "001") else
+	regRead <= instruction(6 downto 4) when (instruction(2 downto 0) = "010")and(instruction(3)='0') else
+		   instruction(5 downto 3) when (instruction(2 downto 0) = "001")or(instruction(2 downto 0) = "101") else
                    "000";
 	
+	w_acc <= '1' when (dataFFT='1')and((instruction(2 downto 0) = "101")or 
+		          		   (instruction(2 downto 0) = "001")or
+					   (instruction(2 downto 0) = "010")or
+				   	   (instruction(2 downto 0) = "011"))else
+                 '0';
+
+
 	--regB    <= instruction(8 downto 6) when instruction(2 downto 0) = "001" else
         --           instruction(5 downto 3) when instruction(2 downto 0) = "010" else
         --           "000";

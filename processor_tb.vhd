@@ -71,7 +71,6 @@ begin
    	process                      -- sinais dos casos de teste (p.ex.)
    	begin
 		wait for 3000 ns;
-      		resetS <= '1';
       		wait;                     -- <== OBRIGATORIO TERMINAR COM WAIT; !!!
   	end process;
 end architecture a_processor_tb;
