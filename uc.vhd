@@ -30,6 +30,7 @@ architecture a_uc of uc is
     end component;
 
     signal dataFFT: std_logic;
+    signal relative_address: unsigned(7 downto 0);
 begin
     F_F_T: flipflopT port map(
         clk      => updatePC,
@@ -44,10 +45,11 @@ begin
                       '0';
 
     --Mover PC
-    dataO <= instruction(9 downto 3) when instruction(2 downto 0) = "100" else
-	     address		when dataFFT='0' else
-             address+"0000001" 	when dataFFT='1' else
-	     "0000000";
+    relative_address <= (('0'&address) + instruction(11 downto 4));
+    dataO <= address            when dataFFT='0' else
+	     instruction(10 downto 4) when instruction(3 downto 0) = "0100" else
+	     relative_address(6 downto 0) when instruction(3 downto 0) = "1100" else
+	     address+"0000001";
 	
     isCte <= '1' when (instruction(2 downto 0) = "010")and(instruction(3)='1') else
 	     '0';
@@ -59,7 +61,7 @@ begin
 	       "01" when ((instruction(2 downto 0) = "101")or
 	       		(instruction(2 downto 0) = "011"))and(instruction(6) = '0') else
 		"10" when instruction(2 downto 0) = "001" else
-		"11" when instruction(2 downto 0) = "010";
+		"11" when (instruction(2 downto 0) = "010")or(instruction(2 downto 0) = "111");
 
     reg_to_w <= instruction(5 downto 3) when (instruction(2 downto 0) = "011")or
 		((instruction(2 downto 0) = "101")and(instruction(6) = '1')) else
@@ -70,7 +72,9 @@ begin
 	       '0';
 
     regRead <= instruction(6 downto 4) when (instruction(2 downto 0) = "010")and(instruction(3)='0') else
-	       instruction(5 downto 3) when (instruction(2 downto 0) = "001")or(instruction(2 downto 0) = "101") else
+	       instruction(5 downto 3) when (instruction(2 downto 0) = "001")or
+	       				    (instruction(2 downto 0) = "101")or 
+				    	    (instruction(2 downto 0) = "111")else
 	       "000";
 	
     w_acc <= '1' when (dataFFT='1')and((instruction(2 downto 0) = "101")or 

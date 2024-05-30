@@ -12,10 +12,11 @@ rrr        -> register number
 xxxxxxxxxx -> whatever 	
 
 ==SUB================================================
-	  f|????????|s|rrr|010 -> SUB
+	   f|???????????|q|010 -> SUB
 	  f|xxxxxxxx|rrr|0|010 -> SUB with register 
 	   f|ccccccccccc|1|010 -> SUB with constant
 
+q  			-> sub with constant?
 f 		    -> flag
 rrr         -> register number           
 xxxxxxxxx   -> whatever
@@ -27,10 +28,15 @@ ccccccccccc -> constant
 f	         -> flag
 cccccccccccc -> constant
 
-==JMP================================================
-	   ??????|eeeeeee|100 -> JMP(absolute)
+==JMP/JR================================================
+	  xxxx|????????|r|100 -> JUMP
+	  xxxxx|eeeeeee|0|100 -> JMP(absolute)
+	  xxxx|dddddddd|1|100 -> JR(relative)
 
-eeeeeee -> address 
+r        -> Is a relative jump?
+xxxx     -> whatever
+eeeeeee  -> address 
+dddddddd -> delta
 
 ==MOV================================================
 	 xxxxxxxxxx|d|aaa|101 -> MOV
@@ -41,4 +47,9 @@ d 		   -> destination
 aaa        -> register number	  
 xxxxxxxxxx -> whatever
 
-===================================================== 
+==CMP=================================================
+ 	xxxxxxxxxx|rrr|111 -> CMP
+
+rrr        -> register number
+xxxxxxxxxx -> whatever
+======================================================

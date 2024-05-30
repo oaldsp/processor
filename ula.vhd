@@ -12,6 +12,7 @@ entity ula is
         C: out std_logic; --Carry
         N: out std_logic; --Negative
         O: out std_logic; --Overflow
+    	Z: out std_logic; --Zero
 	enable_flag: out std_logic
     );
 end entity;
@@ -40,5 +41,8 @@ begin
     --OVERFLOW FLAG(signed)
     O <= '1' when (entrada1(15)='1' and entrada2(15)='1' and saidaS(15)='0') or 
 	 	  (entrada1(15)='0' and entrada2(15)='0' and saidaS(15)='1') else 
+	 '0';
+    --OVERFLOW ZERO
+    Z <= '1' when saidaS="00000000000000000" else
 	 '0';
 end architecture;

@@ -36,6 +36,7 @@ architecture a_processor of processor is
         C: out std_logic; --Carry
         N: out std_logic; --Negative
         O: out std_logic; --Overflow
+	Z: out std_logic; --Zero
 	enable_flag: out std_logic
     );
 end component;
@@ -122,8 +123,8 @@ signal ula_selS: unsigned(1 downto 0);
 signal flag_to_mux, uc_to_bdrIs, uc_to_muxLd, w_accS: std_logic;
 
     --Flags
-signal flag_c, flag_n, flag_o, e_flagS: std_logic;
-signal flag_c_ula, flag_n_ula, flag_o_ula: std_logic;
+signal flag_c, flag_n, flag_o, flag_z, e_flagS: std_logic;
+signal flag_c_ula, flag_n_ula, flag_o_ula, flag_z_ula: std_logic;
 begin
     U_L_A: ula port map(
         entrada1 => acc_to_ula,
@@ -134,6 +135,7 @@ begin
         C => flag_c_ula,
         N => flag_n_ula,
         O => flag_o_ula,
+	Z => flag_z_ula,
 	enable_flag => e_flagS
     );
 
@@ -241,6 +243,15 @@ begin
         data_out => flag_o
     );
     
+    F_Z: reg1bit port map(
+        clk      => clkP,
+        rst      => resetP,
+        wr_en    => e_flagS,
+        data_in  => flag_z_ula,
+        data_out => flag_z
+    );
+
+
     pcP           <= pc_to_ucROM;
     instructionP  <= romOutI;
     ulaIn1P       <= reg_to_mux;
