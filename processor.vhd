@@ -32,9 +32,11 @@ architecture a_processor of processor is
         entrada2 : in unsigned(15 downto 0);
         seletor  : in unsigned(1 downto 0);
         saida    : out unsigned(15 downto 0);
+    	cf: in std_logic;
         C: out std_logic; --Carry
         N: out std_logic; --Negative
-        O: out std_logic --Overflow
+        O: out std_logic; --Overflow
+	enable_flag: out std_logic
     );
 end component;
 
@@ -102,10 +104,12 @@ component mux32x16 is
     );
 end component;
 
-component flipflopT is
+component reg1bit is
     port(
-        clk      : in  std_logic;
-        rst      : in  std_logic;
+        clk      : in std_logic;
+        rst      : in std_logic;
+        wr_en    : in std_logic;
+        data_in  : in std_logic;
         data_out : out std_logic
     );
 end component;
@@ -117,8 +121,8 @@ signal FDEs, regUc_to_bdr, uc_to_bdrReg: unsigned(2 downto 0);
 signal ula_selS: unsigned(1 downto 0);
 signal flag_to_mux, uc_to_bdrIs, uc_to_muxLd, w_accS: std_logic;
 
-    --Flags de FFs
-signal flag_c, flag_n, flag_o: std_logic;
+    --Flags
+signal flag_c, flag_n, flag_o, e_flagS: std_logic;
 signal flag_c_ula, flag_n_ula, flag_o_ula: std_logic;
 begin
     U_L_A: ula port map(
@@ -126,9 +130,11 @@ begin
         entrada2 => mux_to_ula,
         seletor => ula_selS,
         saida => saidaULA,
+	cf => flag_o,
         C => flag_c_ula,
         N => flag_n_ula,
-        O => flag_o_ula
+        O => flag_o_ula,
+	enable_flag => e_flagS
     );
 
     B_D_R: bdr port map(
@@ -210,28 +216,30 @@ begin
         selec    => uc_to_muxLd
     );
     
-    ff_flag_c: flipflopT port map(
-        clk => clkP,
-        rst => resetP,
+    F_C: reg1bit port map(
+        clk      => clkP,
+        rst      => resetP,
+        wr_en    => e_flagS,
+        data_in  => flag_c_ula,
         data_out => flag_c
     );
-    
-    ff_flag_n: flipflopT port map(
-        clk => clkP,
-        rst => resetP,
+
+
+    F_N: reg1bit port map(
+        clk      => clkP,
+        rst      => resetP,
+        wr_en    => e_flagS,
+        data_in  => flag_n_ula,
         data_out => flag_n
     );
-    
-    ff_flag_o: flipflopT port map(
-        clk => clkP,
-        rst => resetP,
+
+    F_O: reg1bit port map(
+        clk      => clkP,
+        rst      => resetP,
+        wr_en    => e_flagS,
+        data_in  => flag_o_ula,
         data_out => flag_o
     );
-    
-    
-    flag_c <= flag_c_ula;
-    flag_n <= flag_n_ula;
-    flag_o <= flag_o_ula;
     
     pcP           <= pc_to_ucROM;
     instructionP  <= romOutI;

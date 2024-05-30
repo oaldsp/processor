@@ -27,8 +27,8 @@ ccccccccccc -> constant
 f	         -> flag
 cccccccccccc -> constant
 
-==JAL================================================
-	   ??????|eeeeeee|100 -> absolute JAL
+==JMP================================================
+	   ??????|eeeeeee|100 -> JMP(absolute)
 
 eeeeeee -> address 
 

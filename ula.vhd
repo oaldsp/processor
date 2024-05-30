@@ -8,24 +8,37 @@ entity ula is
         entrada2  : in unsigned(15 downto 0);
         seletor   : in unsigned(1 downto 0);
         saida     : out unsigned(15 downto 0);
+    	cf: in std_logic;
         C: out std_logic; --Carry
         N: out std_logic; --Negative
-        O: out std_logic --Overflow
+        O: out std_logic; --Overflow
+	enable_flag: out std_logic
     );
 end entity;
 
 architecture a_ula of ula is
+signal entrada1S, entrada2S, saidaS: unsigned(16 downto 0);
 begin
-	
-    saida <= entrada1                when seletor="00" else 	--MOV acc
-	     entrada2   		 when seletor="01" else --MOV bdr
-	     (entrada1 + entrada2)   when seletor="10" else 	--ADD
-	     (entrada1 - entrada2)   when seletor="11";     	--SUB
+    entrada1S <= '0' &  entrada1;
+    entrada2S <= '0' &  entrada2;
 
-    --CARRY FLAG
-    --C <= '1' when (entrada1(15) AND saida(15)) OR (entrada1(15) AND NOT saida(15)) OR (entrada2(15) AND NOT saida(15)) else '0';
+    saidaS <=entrada1S               when seletor="00" else  --MOV acc
+	     entrada2S 		     when seletor="01" else  --MOV bdr
+	     (entrada1S + entrada2S) when seletor="10" else  --ADD
+	     (entrada1S - entrada2S - ("0000000000000000" & cf)) when seletor="11"; --SUB
+
+    saida <= saidaS(15 downto 0);
+    
+    enable_flag <= seletor(1);
+
+    --CARRY FLAG(unsigned)
+    C <= saidaS(16);
     --NEGATIVE FLAG
-    --N <= '1' when entrada2 <= entrada1 else '0';
-    --OVERFLOW FLAG
-    O <= '1' when entrada1(15)='1' AND entrada2(15)='1' else '0';
+    N <= '1' when (saidaS(15)='1' )or 
+	 	  ((seletor="11")and(entrada2>entrada1)) else 
+	 '0';
+    --OVERFLOW FLAG(signed)
+    O <= '1' when (entrada1(15)='1' and entrada2(15)='1' and saidaS(15)='0') or 
+	 	  (entrada1(15)='0' and entrada2(15)='0' and saidaS(15)='1') else 
+	 '0';
 end architecture;

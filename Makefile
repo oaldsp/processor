@@ -2,6 +2,9 @@ all:
 	ghdl -a reg16bits.vhd 
 	ghdl -e reg16bits
 
+	ghdl -a reg1bit.vhd 
+	ghdl -e reg1bit
+
 	ghdl -a sm.vhd
 	ghdl -e sm	
 
