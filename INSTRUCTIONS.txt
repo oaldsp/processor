@@ -3,7 +3,7 @@
 -> Processor's instructions description
 
 ==NOP================================================
-	    0000000000000|000 -> NOP
+	    000000000000|000 -> NOP
 
 ==ADD================================================
 	   xxxxxxxxxx|rrr|001 -> ADD        
@@ -12,18 +12,20 @@ rrr        -> register number
 xxxxxxxxxx -> whatever 	
 
 ==SUB================================================
-	  ?????????|s|rrr|010 -> SUB
-	  xxxxxxxxx|rrr|0|010 -> SUB with register 
-	   cccccccccccc|1|010 -> SUB with constant
+	  f|????????|s|rrr|010 -> SUB
+	  f|xxxxxxxx|rrr|0|010 -> SUB with register 
+	   f|ccccccccccc|1|010 -> SUB with constant
 
-rrr          -> register number           
-xxxxxxxxx    -> whatever
-cccccccccccc -> constant
+f 		    -> flag
+rrr         -> register number           
+xxxxxxxxx   -> whatever
+ccccccccccc -> constant
 
 ==LD=================================================
-	    ccccccccccccc|011 -> LD
+	    f|cccccccccccc|011 -> LD
 
-ccccccccccccc -> constant
+f	         -> flag
+cccccccccccc -> constant
 
 ==JAL================================================
 	   ??????|eeeeeee|100 -> absolute JAL
