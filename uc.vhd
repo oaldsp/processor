@@ -7,10 +7,14 @@ entity uc is
         updatePC    : in std_logic;
         instruction : in unsigned(15 downto 0);
         address     : in unsigned(6 downto 0);
+        C: in std_logic; --Carry
+        N: in std_logic; --Negative
+        O: in std_logic; --Overflow
+        Z: in std_logic; --Zero
         cte         : out unsigned(15 downto 0); 
-        isCte        : out std_logic;
+        isCte       : out std_logic;
         dataO       : out unsigned(6 downto 0);
-        regRead        : out unsigned(2 downto 0);
+        regRead     : out unsigned(2 downto 0);
         word_to_ld  : out unsigned(15 downto 0);
         reg_to_w    : out unsigned(2 downto 0);
         Is_to_w     : out std_logic;
@@ -29,7 +33,7 @@ architecture a_uc of uc is
         );
     end component;
 
-    signal dataFFT: std_logic;
+    signal dataFFT, cmp_flag: std_logic;
     signal relative_address: unsigned(7 downto 0);
 begin
     F_F_T: flipflopT port map(
@@ -44,13 +48,20 @@ begin
     Is_to_ld   <= '1' when instruction(2 downto 0) = "011" else
                       '0';
 
-    --Mover PC
+    --Mover PC----
     relative_address <= (('0'&address) + instruction(11 downto 4));
-    dataO <= address            when dataFFT='0' else
+    
+    cmp_flag <= C when instruction(13 downto 12) = "00" else 
+		N when instruction(13 downto 12) = "01" else
+		O when instruction(13 downto 12) = "10" else
+		Z;
+
+    dataO <= address when dataFFT='0' else
 	     instruction(10 downto 4) when instruction(3 downto 0) = "0100" else
-	     relative_address(6 downto 0) when instruction(3 downto 0) = "1100" else
+	     relative_address(6 downto 0) when (instruction(3 downto 0) = "1100")and(cmp_flag='0')else
 	     address+"0000001";
-	
+    --------------	
+    
     isCte <= '1' when (instruction(2 downto 0) = "010")and(instruction(3)='1') else
 	     '0';
 

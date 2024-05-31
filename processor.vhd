@@ -47,6 +47,10 @@ component uc is
         updatePC    : in std_logic;
         instruction : in unsigned(15 downto 0);
         address     : in unsigned(6 downto 0);
+    	C: in std_logic; --Carry
+        N: in std_logic; --Negative
+        O: in std_logic; --Overflow
+        Z: in std_logic; --Zero
         cte         : out unsigned(15 downto 0);
         isCte       : out std_logic;
         dataO       : out unsigned(6 downto 0);
@@ -153,6 +157,10 @@ begin
         updatePC    => clkP, --FDEs(2)
         instruction => romOutI,
         address     => pc_to_ucROM,
+	C 	    => flag_c,
+        N 	    => flag_n,
+        O 	    => flag_o,
+        Z 	    => flag_z,
         cte         => cte_to_mux,
         isCte       => flag_to_mux,
         dataO       => uc_to_pc,

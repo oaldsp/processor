@@ -25,8 +25,8 @@ begin
 
     saidaS <=entrada1S               when seletor="00" else  --MOV acc
 	     entrada2S 		     when seletor="01" else  --MOV bdr
-	     (entrada1S + entrada2S) when seletor="10" else  --ADD
-	     (entrada1S - entrada2S - ("0000000000000000" & cf)) when seletor="11"; --SUB
+	     (entrada2S + entrada1S) when seletor="10" else  --ADD
+	     (entrada2S - entrada1S - ("0000000000000000" & cf)) when seletor="11"; --SUB
 
     saida <= saidaS(15 downto 0);
     

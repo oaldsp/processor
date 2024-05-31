@@ -1,14 +1,14 @@
 [*]
 [*] GTKWave Analyzer v3.3.103 (w)1999-2019 BSI
-[*] Thu May 30 22:57:17 2024
+[*] Fri May 31 00:07:46 2024
 [*]
 [dumpfile] "/home/otavio/Desktop/processor/processor_tb.ghw"
-[dumpfile_mtime] "Thu May 30 22:56:35 2024"
-[dumpfile_size] 17451
+[dumpfile_mtime] "Fri May 31 00:07:08 2024"
+[dumpfile_size] 22747
 [savefile] "/home/otavio/Desktop/processor/SIMULACAO.gtkw"
-[timestart] 2269000000
+[timestart] 0
 [size] 1000 600
-[pos] 282 31
+[pos] 234 29
 *-28.000000 2880000000 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
 [treeopen] top.
 [treeopen] top.processor_tb.
@@ -33,43 +33,43 @@ top.processor_tb.clk
 @200
 -Registers
 -Register 0
-@22
+@25
 #{top.processor_tb.pro.b_d_r.reg0.registro[15:0]} top.processor_tb.pro.b_d_r.reg0.registro[15] top.processor_tb.pro.b_d_r.reg0.registro[14] top.processor_tb.pro.b_d_r.reg0.registro[13] top.processor_tb.pro.b_d_r.reg0.registro[12] top.processor_tb.pro.b_d_r.reg0.registro[11] top.processor_tb.pro.b_d_r.reg0.registro[10] top.processor_tb.pro.b_d_r.reg0.registro[9] top.processor_tb.pro.b_d_r.reg0.registro[8] top.processor_tb.pro.b_d_r.reg0.registro[7] top.processor_tb.pro.b_d_r.reg0.registro[6] top.processor_tb.pro.b_d_r.reg0.registro[5] top.processor_tb.pro.b_d_r.reg0.registro[4] top.processor_tb.pro.b_d_r.reg0.registro[3] top.processor_tb.pro.b_d_r.reg0.registro[2] top.processor_tb.pro.b_d_r.reg0.registro[1] top.processor_tb.pro.b_d_r.reg0.registro[0]
 @200
 -Register 1
-@22
+@25
 #{top.processor_tb.pro.b_d_r.reg1.registro[15:0]} top.processor_tb.pro.b_d_r.reg1.registro[15] top.processor_tb.pro.b_d_r.reg1.registro[14] top.processor_tb.pro.b_d_r.reg1.registro[13] top.processor_tb.pro.b_d_r.reg1.registro[12] top.processor_tb.pro.b_d_r.reg1.registro[11] top.processor_tb.pro.b_d_r.reg1.registro[10] top.processor_tb.pro.b_d_r.reg1.registro[9] top.processor_tb.pro.b_d_r.reg1.registro[8] top.processor_tb.pro.b_d_r.reg1.registro[7] top.processor_tb.pro.b_d_r.reg1.registro[6] top.processor_tb.pro.b_d_r.reg1.registro[5] top.processor_tb.pro.b_d_r.reg1.registro[4] top.processor_tb.pro.b_d_r.reg1.registro[3] top.processor_tb.pro.b_d_r.reg1.registro[2] top.processor_tb.pro.b_d_r.reg1.registro[1] top.processor_tb.pro.b_d_r.reg1.registro[0]
 @200
 -Register 2
-@22
+@25
 #{top.processor_tb.pro.b_d_r.reg2.registro[15:0]} top.processor_tb.pro.b_d_r.reg2.registro[15] top.processor_tb.pro.b_d_r.reg2.registro[14] top.processor_tb.pro.b_d_r.reg2.registro[13] top.processor_tb.pro.b_d_r.reg2.registro[12] top.processor_tb.pro.b_d_r.reg2.registro[11] top.processor_tb.pro.b_d_r.reg2.registro[10] top.processor_tb.pro.b_d_r.reg2.registro[9] top.processor_tb.pro.b_d_r.reg2.registro[8] top.processor_tb.pro.b_d_r.reg2.registro[7] top.processor_tb.pro.b_d_r.reg2.registro[6] top.processor_tb.pro.b_d_r.reg2.registro[5] top.processor_tb.pro.b_d_r.reg2.registro[4] top.processor_tb.pro.b_d_r.reg2.registro[3] top.processor_tb.pro.b_d_r.reg2.registro[2] top.processor_tb.pro.b_d_r.reg2.registro[1] top.processor_tb.pro.b_d_r.reg2.registro[0]
 @200
 -Register 3
-@22
+@25
 #{top.processor_tb.pro.b_d_r.reg3.registro[15:0]} top.processor_tb.pro.b_d_r.reg3.registro[15] top.processor_tb.pro.b_d_r.reg3.registro[14] top.processor_tb.pro.b_d_r.reg3.registro[13] top.processor_tb.pro.b_d_r.reg3.registro[12] top.processor_tb.pro.b_d_r.reg3.registro[11] top.processor_tb.pro.b_d_r.reg3.registro[10] top.processor_tb.pro.b_d_r.reg3.registro[9] top.processor_tb.pro.b_d_r.reg3.registro[8] top.processor_tb.pro.b_d_r.reg3.registro[7] top.processor_tb.pro.b_d_r.reg3.registro[6] top.processor_tb.pro.b_d_r.reg3.registro[5] top.processor_tb.pro.b_d_r.reg3.registro[4] top.processor_tb.pro.b_d_r.reg3.registro[3] top.processor_tb.pro.b_d_r.reg3.registro[2] top.processor_tb.pro.b_d_r.reg3.registro[1] top.processor_tb.pro.b_d_r.reg3.registro[0]
 @200
 -Register 4
-@22
+@25
 #{top.processor_tb.pro.b_d_r.reg4.registro[15:0]} top.processor_tb.pro.b_d_r.reg4.registro[15] top.processor_tb.pro.b_d_r.reg4.registro[14] top.processor_tb.pro.b_d_r.reg4.registro[13] top.processor_tb.pro.b_d_r.reg4.registro[12] top.processor_tb.pro.b_d_r.reg4.registro[11] top.processor_tb.pro.b_d_r.reg4.registro[10] top.processor_tb.pro.b_d_r.reg4.registro[9] top.processor_tb.pro.b_d_r.reg4.registro[8] top.processor_tb.pro.b_d_r.reg4.registro[7] top.processor_tb.pro.b_d_r.reg4.registro[6] top.processor_tb.pro.b_d_r.reg4.registro[5] top.processor_tb.pro.b_d_r.reg4.registro[4] top.processor_tb.pro.b_d_r.reg4.registro[3] top.processor_tb.pro.b_d_r.reg4.registro[2] top.processor_tb.pro.b_d_r.reg4.registro[1] top.processor_tb.pro.b_d_r.reg4.registro[0]
 @200
 -Register 5
-@22
+@25
 #{top.processor_tb.pro.b_d_r.reg5.registro[15:0]} top.processor_tb.pro.b_d_r.reg5.registro[15] top.processor_tb.pro.b_d_r.reg5.registro[14] top.processor_tb.pro.b_d_r.reg5.registro[13] top.processor_tb.pro.b_d_r.reg5.registro[12] top.processor_tb.pro.b_d_r.reg5.registro[11] top.processor_tb.pro.b_d_r.reg5.registro[10] top.processor_tb.pro.b_d_r.reg5.registro[9] top.processor_tb.pro.b_d_r.reg5.registro[8] top.processor_tb.pro.b_d_r.reg5.registro[7] top.processor_tb.pro.b_d_r.reg5.registro[6] top.processor_tb.pro.b_d_r.reg5.registro[5] top.processor_tb.pro.b_d_r.reg5.registro[4] top.processor_tb.pro.b_d_r.reg5.registro[3] top.processor_tb.pro.b_d_r.reg5.registro[2] top.processor_tb.pro.b_d_r.reg5.registro[1] top.processor_tb.pro.b_d_r.reg5.registro[0]
 @200
 -Register 6
-@22
+@25
 #{top.processor_tb.pro.b_d_r.reg6.registro[15:0]} top.processor_tb.pro.b_d_r.reg6.registro[15] top.processor_tb.pro.b_d_r.reg6.registro[14] top.processor_tb.pro.b_d_r.reg6.registro[13] top.processor_tb.pro.b_d_r.reg6.registro[12] top.processor_tb.pro.b_d_r.reg6.registro[11] top.processor_tb.pro.b_d_r.reg6.registro[10] top.processor_tb.pro.b_d_r.reg6.registro[9] top.processor_tb.pro.b_d_r.reg6.registro[8] top.processor_tb.pro.b_d_r.reg6.registro[7] top.processor_tb.pro.b_d_r.reg6.registro[6] top.processor_tb.pro.b_d_r.reg6.registro[5] top.processor_tb.pro.b_d_r.reg6.registro[4] top.processor_tb.pro.b_d_r.reg6.registro[3] top.processor_tb.pro.b_d_r.reg6.registro[2] top.processor_tb.pro.b_d_r.reg6.registro[1] top.processor_tb.pro.b_d_r.reg6.registro[0]
 @200
 -Register 7
-@22
+@25
 #{top.processor_tb.pro.b_d_r.reg7.registro[15:0]} top.processor_tb.pro.b_d_r.reg7.registro[15] top.processor_tb.pro.b_d_r.reg7.registro[14] top.processor_tb.pro.b_d_r.reg7.registro[13] top.processor_tb.pro.b_d_r.reg7.registro[12] top.processor_tb.pro.b_d_r.reg7.registro[11] top.processor_tb.pro.b_d_r.reg7.registro[10] top.processor_tb.pro.b_d_r.reg7.registro[9] top.processor_tb.pro.b_d_r.reg7.registro[8] top.processor_tb.pro.b_d_r.reg7.registro[7] top.processor_tb.pro.b_d_r.reg7.registro[6] top.processor_tb.pro.b_d_r.reg7.registro[5] top.processor_tb.pro.b_d_r.reg7.registro[4] top.processor_tb.pro.b_d_r.reg7.registro[3] top.processor_tb.pro.b_d_r.reg7.registro[2] top.processor_tb.pro.b_d_r.reg7.registro[1] top.processor_tb.pro.b_d_r.reg7.registro[0]
 @200
 -acc
-@22
+@25
 #{top.processor_tb.pro.a_c_c.registro[15:0]} top.processor_tb.pro.a_c_c.registro[15] top.processor_tb.pro.a_c_c.registro[14] top.processor_tb.pro.a_c_c.registro[13] top.processor_tb.pro.a_c_c.registro[12] top.processor_tb.pro.a_c_c.registro[11] top.processor_tb.pro.a_c_c.registro[10] top.processor_tb.pro.a_c_c.registro[9] top.processor_tb.pro.a_c_c.registro[8] top.processor_tb.pro.a_c_c.registro[7] top.processor_tb.pro.a_c_c.registro[6] top.processor_tb.pro.a_c_c.registro[5] top.processor_tb.pro.a_c_c.registro[4] top.processor_tb.pro.a_c_c.registro[3] top.processor_tb.pro.a_c_c.registro[2] top.processor_tb.pro.a_c_c.registro[1] top.processor_tb.pro.a_c_c.registro[0]
 @200
 -rom's address
-@25
+@24
 #{top.processor_tb.pro.r_o_m.address[6:0]} top.processor_tb.pro.r_o_m.address[6] top.processor_tb.pro.r_o_m.address[5] top.processor_tb.pro.r_o_m.address[4] top.processor_tb.pro.r_o_m.address[3] top.processor_tb.pro.r_o_m.address[2] top.processor_tb.pro.r_o_m.address[1] top.processor_tb.pro.r_o_m.address[0]
 @200
 -Saida da ULA

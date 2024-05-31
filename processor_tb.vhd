@@ -20,7 +20,7 @@ architecture a_processor_tb of processor_tb is
    
     --SINAIS PARA CALCULAR CLCK
        -- 100 ns é o período que escolhi para o clock
-        constant period_time : time      := 100 ns;
+        constant period_time : time      := 10 ns;
         signal   finished    : std_logic := '0';
         signal   clk, resetC : std_logic;
 

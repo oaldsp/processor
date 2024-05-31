@@ -31,10 +31,15 @@ cccccccccccc -> constant
 ==JMP/JR================================================
 	  xxxx|????????|r|100 -> JUMP
 	  xxxxx|eeeeeee|0|100 -> JMP(absolute)
-	  xxxx|dddddddd|1|100 -> JR(relative)
+	  xxff|dddddddd|1|100 -> JR(relative)
+	    00 -> flag C
+	    01 -> flag N
+	    10 -> flag O
+	    11 -> flag Z
 
 r        -> Is a relative jump?
 xxxx     -> whatever
+ff       -> comparation flag
 eeeeeee  -> address 
 dddddddd -> delta
 
