@@ -4,15 +4,13 @@ use ieee.numeric_std.all;
 
 entity bdr is
 	port(
-		regnum1      : in unsigned(2  downto 0); 	--Registrador 1 que sera lido
-		regnum2      : in unsigned(2  downto 0); 	--Registrador 2 que sera lido
+		regnum      : in unsigned(2  downto 0); 	--Registrador que sera lido
 		word         : in unsigned(15 downto 0); 	--O que sera escrito
 		reg_to_write : in unsigned(2 downto 0);  	--Qual reg eh para escrver
 		write_enable : in std_logic; 			--Habilitar para escrever
 		clkBD        : in std_logic;		
 		reset        : in std_logic;
-		reg1_data    : out unsigned(15 downto 0);	 --Informacao que esta no reg 
-		reg2_data    : out unsigned(15 downto 0)	 --Informacao que esta no reg
+		reg_data    : out unsigned(15 downto 0)  	--Informacao que esta no reg 
 	);
 end entity;
 
@@ -44,18 +42,28 @@ begin
 	--wr_en_sig(TO_INTEGER(reg_to_write)) <= '1' when write_enable='1';
 	--wr_en_sig <= "0000000" when write_enable='0';
         
-	--LOGICA PARA SAIDA 1 e  2
-        reg1_data <= out_sig( ((TO_INTEGER(regnum1)+1)*16 -1) downto (TO_INTEGER(regnum1)*16) );
-        reg2_data <= out_sig( ((TO_INTEGER(regnum2)+1)*16 -1) downto (TO_INTEGER(regnum2)*16) );
-	
-	process(write_enable, reg_to_write)
-	begin	
-		--LOGICA  PARA ESCRITA(ARRUMAR ISSO DAQUI ALGUM DIA)
-		if write_enable='1' then 
-			wr_en_sig(TO_INTEGER(reg_to_write)) <= '1';
-		else 
-			wr_en_sig <= "0000000";
-		end if;
-	end process;
+	--LOGICA PARA SAIDA
+        reg_data <= out_sig( ((TO_INTEGER(regnum)+1)*16 -1) downto (TO_INTEGER(regnum)*16) );
+
+	wr_en_sig<= "0000000" when write_enable='0'   else	
+		    "0000001" when reg_to_write="001" else
+		    "0000010" when reg_to_write="010" else
+		    "0000100" when reg_to_write="011" else
+		    "0001000" when reg_to_write="100" else
+		    "0010000" when reg_to_write="101" else
+		    "0100000" when reg_to_write="110" else
+		    "1000000" when reg_to_write="111" else
+		    "0000000";
+		   	 
+	--process(write_enable, reg_to_write)
+	--begin	
+		----LOGICA  PARA ESCRITA(ARRUMAR ISSO DAQUI ALGUM DIA)
+		--if write_enable='1' then
+		--	wr_en_sig <= "0000000";
+		--	wr_en_sig(TO_INTEGER(reg_to_write)) <= '1';
+		--else 
+		--	wr_en_sig <= "0000000";
+		--end if;
+	--end process;
 
 end architecture;

@@ -12,19 +12,31 @@ end entity;
 
 architecture a_romof of rom is 
 	type mem is array (0 to 127) of unsigned(15 downto 0);
-	--  00000000|0000000            |0
-	--  conteudo|endereco para pular|pula ou não
 	constant content_rom : mem := (
-		0 => "0000000000000000",
-        	1 => "0000000100001011",
-        	2 => "0000001000000000",
-        	3 => "0000001100000000",
-        	4 => "0000010000000000",
-     	   	5 => "0000010100000000",
-       		6 => "0000011000000000",
-    	    	7 => "0000011100000001",
-        	8 => "0000100000000000",
-        	9 => "0000100100000000",
+		0  => B"0000000000101_011",	-- li r3, 5
+		--Carregando r2 com 30 para ser usado no CMP
+		1  => B"0000000011110_011",     -- li a, 30
+                2  => B"000000000_1_010_101",   -- mov r2, a
+		--A. Carrega R3 (o registrador 3) com o valor 0
+		3  => B"0000000000000_011",    	-- li a, 0
+                4  => B"000000000_1_011_101",   -- mov r3, a
+		--B. Carrega R4 com 0
+		5  => B"0000000000000_011",    	-- li a, 0
+                6  => B"000000000_1_100_101",   -- mov r4, a
+		--C. Soma R3 com R4 e guarda em R4
+		7  => B"000000000_0_011_101",   -- mov a, r3
+                8  => B"0000000000_100_001",    -- add a, r4
+                9  => B"000000000_1_100_101",   -- mov r4, a
+		--D. Soma 1 em R3
+		10 => B"0000000000001_011",    	-- li a, 1
+		11 => B"0000000000_011_001",    -- add a, r3
+		12 => B"000000000_1_011_101",   -- mov r3, a
+		--Se R3<30 salta para a instrução do passo C
+		13 => B"0000000000_010_111",    -- cmp r2, a
+                14 => B"00_11_11111001_1_100",  -- jr z, -7
+		--F. Copia valor de R4 para R5
+		15 => B"000000000_0_100_101",   -- mov a, r4
+		16 => B"000000000_1_101_101",   -- mov r5, a
 		others => (others=>'0')
 	);
 begin
