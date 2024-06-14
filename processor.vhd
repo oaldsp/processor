@@ -60,6 +60,10 @@ component uc is
         Is_to_w     : out std_logic;
         Is_to_ld    : out std_logic;
 	w_acc 	    : out std_logic;
+        ram_or_ula  : out std_logic;
+	addressRam  : out unsigned(6 downto 0);
+        ram_w       : out std_logic;
+        ram_data    : out unsigned(15 downto 0);
         ula_sel     : out unsigned(1 downto 0)
     );
 end component;
@@ -119,12 +123,22 @@ component reg1bit is
     );
 end component;
 
-signal reg_to_mux, cte_to_mux, mux_to_ula, romOutS, romOutI: unsigned(15 downto 0);
-signal uc_to_mux, saidaULA, acc_to_ula, mux_to_acc: unsigned(15 downto 0);
-signal uc_to_pc, pc_to_ucROM: unsigned(6 downto 0);
+component ram is
+    port(
+	clk      : in std_logic;
+        endereco : in unsigned(6 downto 0);
+        wr_en    : in std_logic;
+        dado_in  : in unsigned(15 downto 0);
+        dado_out : out unsigned(15 downto 0)
+    );
+end component;
+
+signal reg_to_mux, cte_to_mux, mux_to_ula, romOutS, romOutI, mux_to_bdr: unsigned(15 downto 0);
+signal uc_to_mux, saidaULA, acc_to_ula, mux_to_acc, uc_to_ram, ram_to_mux: unsigned(15 downto 0);
+signal uc_to_pc, pc_to_ucROM, uc_to_ram_Addss: unsigned(6 downto 0);
 signal FDEs, regUc_to_bdr, uc_to_bdrReg: unsigned(2 downto 0);
 signal ula_selS: unsigned(1 downto 0);
-signal flag_to_mux, uc_to_bdrIs, uc_to_muxLd, w_accS: std_logic;
+signal flag_to_mux, uc_to_bdrIs, uc_to_ramW, uc_to_muxLd, w_accS, ram_or_ulaS: std_logic;
 
     --Flags
 signal flag_c, flag_n, flag_o, flag_z, e_flagS: std_logic;
@@ -146,7 +160,7 @@ begin
     B_D_R: bdr port map(
         reg_data     => reg_to_mux,
         regnum       => regUc_to_bdr,
-        word         => saidaULA,
+        word         => mux_to_bdr,
         reg_to_write => uc_to_bdrReg,
         write_enable => uc_to_bdrIs,
         clkBD        => clkP,
@@ -170,6 +184,10 @@ begin
         Is_to_w     => uc_to_bdrIs,
         Is_to_ld    => uc_to_muxLd,
 	w_acc       => w_accS,
+	ram_or_ula  => ram_or_ulaS,
+	addressRam  => uc_to_ram_Addss,
+ 	ram_w       => uc_to_ramW,
+        ram_data    => uc_to_ram,
         ula_sel     => ula_selS
     );
 
@@ -225,6 +243,13 @@ begin
         data_out => mux_to_acc,
         selec    => uc_to_muxLd
     );
+
+     M_U_X_R: mux32x16 port map(
+        data_in0 => ram_to_mux,
+        data_in1 => saidaULA,
+        data_out => mux_to_bdr,
+        selec    => ram_or_ulaS
+    );
     
     F_C: reg1bit port map(
         clk      => clkP,
@@ -259,6 +284,14 @@ begin
         data_out => flag_z
     );
 
+
+    R_A_M: ram port map(
+    	clk 	 => clkP,
+	endereco => uc_to_ram_Addss,
+	wr_en	 => uc_to_ramW,
+	dado_in  => uc_to_ram,
+	dado_out => ram_to_mux	
+    ); 
 
     pcP           <= pc_to_ucROM;
     instructionP  <= romOutI;

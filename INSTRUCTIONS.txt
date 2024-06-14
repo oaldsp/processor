@@ -3,58 +3,70 @@
 -> Processor's instructions description
 
 ==NOP================================================
-	    000000000000|000 -> NOP
+	    00000000000|0000 -> NOP
 
 ==ADD================================================
-	   xxxxxxxxxx|rrr|001 -> ADD        
+	   xxxxxxxxx|rrr|0001 -> ADD        
 
-rrr        -> register number  
-xxxxxxxxxx -> whatever 	
+rrr       -> register number  
+xxxxxxxxx -> whatever 	
 
 ==SUB================================================
-	   f|???????????|q|010 -> SUB
-	  f|xxxxxxxx|rrr|0|010 -> SUB with register 
-	   f|ccccccccccc|1|010 -> SUB with constant
+	   f|??????????|q|0010 -> SUB
+	  f|xxxxxxx|rrr|0|0010 -> SUB with register 
+	   f|cccccccccc|1|0010 -> SUB with constant
 
-q  			-> sub with constant?
-f 		    -> flag
-rrr         -> register number           
-xxxxxxxxx   -> whatever
-ccccccccccc -> constant
+q  		-> sub with constant?
+f 		   -> flag
+rrr        -> register number           
+xxxxxxxx   -> whatever
+cccccccccc -> constant
 
 ==LD=================================================
-	    f|cccccccccccc|011 -> LD
+	    f|ccccccccccc|0011 -> LD
 
-f	         -> flag
-cccccccccccc -> constant
+f	        -> flag
+ccccccccccc -> constant
 
 ==JMP/JR================================================
-	  xxxx|????????|r|100 -> JUMP
-	  xxxxx|eeeeeee|0|100 -> JMP(absolute)
-	  xxff|dddddddd|1|100 -> JR(relative)
+	  xxx|????????|r|0100 -> JUMP
+	  xxxx|eeeeeee|0|0100 -> JMP(absolute)
+	  xff|dddddddd|1|0100 -> JR(relative)
 	    00 -> flag C
 	    01 -> flag N
 	    10 -> flag O
 	    11 -> flag Z
 
-r        -> Is a relative jump?
-xxxx     -> whatever
-ff       -> comparation flag
-eeeeeee  -> address 
-dddddddd -> delta
+r       -> Is a relative jump?
+xxx     -> whatever
+ff      -> comparation flag
+eeeeeee -> address 
+dddddddd-> delta
 
 ==MOV================================================
-	 xxxxxxxxxx|d|aaa|101 -> MOV
+	 xxxxxxxxx|d|aaa|0101 -> MOV
 	 		   |0| -> save in accumulator
 	 		   |1| -> save in register
 
 d 		   -> destination
 aaa        -> register number	  
-xxxxxxxxxx -> whatever
+xxxxxxxxx -> whatever
 
 ==CMP=================================================
- 	xxxxxxxxxx|rrr|111 -> CMP
+ 	xxxxxxxxx|rrr|0111 -> CMP
 
 rrr        -> register number
-xxxxxxxxxx -> whatever
+xxxxxxxxx -> whatever
+==LW==================================================
+	xx|eeeeeee|rrr|1000 -> LW	
+	
+xx		-> whatever	
+rrr     -> register number
+eeeeeee -> address in RAM
+==SW==================================================
+	xx|eeeeeee|rrr|1001 -> SW
+	
+xx		-> whatever
+rrr     -> register number
+eeeeeee -> address in RAM	
 ======================================================

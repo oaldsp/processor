@@ -20,6 +20,10 @@ entity uc is
         Is_to_w     : out std_logic;
         Is_to_ld    : out std_logic;
     	w_acc       : out std_logic;
+    	ram_or_ula  : out std_logic;
+	addressRam  : out unsigned(6 downto 0);
+	ram_w 	    : out std_logic;
+    	ram_data    : out unsigned(15 downto 0);
         ula_sel     : out unsigned(1 downto 0)
     );
 end entity;
@@ -93,5 +97,12 @@ begin
 					(instruction(2 downto 0) = "010")or
 					(instruction(2 downto 0) = "011"))else
 		'0';
+
+    ram_or_ula  <= '0' when instruction(2 downto 0) = "1000" else
+		   '1';
+
+    --addressRam  <= instruction(13 downto 7);
+
+    --ram_w       <= instruction(6 downto 4);
 
 end architecture a_uc;

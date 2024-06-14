@@ -5,6 +5,9 @@ all:
 	ghdl -a reg1bit.vhd 
 	ghdl -e reg1bit
 
+	ghdl -a ram.vhd
+	ghdl -e ram
+
 	ghdl -a sm.vhd
 	ghdl -e sm	
 
