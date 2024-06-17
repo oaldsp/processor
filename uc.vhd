@@ -46,14 +46,14 @@ begin
         data_out => dataFFT
     );
 
-    word_to_ld <= ("0000" & instruction(14 downto 3)) when instruction(2 downto 0) = "011" else
+    word_to_ld <= ("00000" & instruction(14 downto 4)) when instruction(3 downto 0) = "0011" else
                       "0000000000000000";
 
-    Is_to_ld   <= '1' when instruction(2 downto 0) = "011" else
+    Is_to_ld   <= '1' when instruction(3 downto 0) = "0011" else
                       '0';
 
     --Mover PC----
-    relative_address <= (('0'&address) + instruction(11 downto 4));
+    relative_address <= (('0'&address) + instruction(12 downto 5));
     
     cmp_flag <= C when instruction(13 downto 12) = "00" else 
 		N when instruction(13 downto 12) = "01" else
@@ -61,41 +61,41 @@ begin
 		Z;
 
     dataO <= address when dataFFT='0' else
-	     instruction(10 downto 4) when instruction(3 downto 0) = "0100" else
-	     relative_address(6 downto 0) when (instruction(3 downto 0) = "1100")and(cmp_flag='0')else
+	     instruction(11 downto 5) when instruction(4 downto 0) = "00100" else 
+	     relative_address(6 downto 0) when (instruction(4 downto 0) = "10100")and(cmp_flag='0')else
 	     address+"0000001";
     --------------	
     
-    isCte <= '1' when (instruction(2 downto 0) = "010")and(instruction(3)='1') else
+    isCte <= '1' when (instruction(3 downto 0) = "0010")and(instruction(4)='1') else
 	     '0';
 
-    cte <= ("00000" & instruction(14 downto 4)) when (instruction(2 downto 0) = "010")and(instruction(4)='1') else
+    cte <= ("000000" & instruction(14 downto 5)) when (instruction(3 downto 0) = "0010")and(instruction(4)='1') else
 	   "0000000000000000";
 	
-    ula_sel <= "00" when (instruction(2 downto 0) = "101")and(instruction(6) = '1') else
-	       "01" when ((instruction(2 downto 0) = "101")or
-	       		(instruction(2 downto 0) = "011"))and(instruction(6) = '0') else
-		"10" when instruction(2 downto 0) = "001" else
-		"11" when (instruction(2 downto 0) = "010")or(instruction(2 downto 0) = "111");
+    ula_sel <= "00" when (instruction(3 downto 0) = "0101")and(instruction(7) = '1') else
+	       "01" when (instruction(3 downto 0) = "0011")or
+	       		((instruction(3 downto 0) = "0101")and(instruction(7) = '0')) else
+		"10" when instruction(3 downto 0) = "0001" else
+		"11" when (instruction(3 downto 0) = "0010")or(instruction(3 downto 0) = "0111");
 
-    reg_to_w <= instruction(5 downto 3) when (instruction(2 downto 0) = "011")or
-		((instruction(2 downto 0) = "101")and(instruction(6) = '1')) else
+    reg_to_w <= instruction(6 downto 4) when --(instruction(3 downto 0) = "0011")or--LINHA NAO FAZ SENTIDO
+		((instruction(3 downto 0) = "0101")and(instruction(7) = '1')) else
 		"000";
 
-    Is_to_w <= '1' when (dataFFT='1')and((instruction(2 downto 0) = "011")or
-	       ((instruction(2 downto 0) = "101")and(instruction(6) = '1'))) else
+    Is_to_w <= '1' when (dataFFT='1')and((instruction(3 downto 0) = "0011")or
+	       ((instruction(3 downto 0) = "0101")and(instruction(7) = '1'))) else
 	       '0';
 
-    regRead <= instruction(6 downto 4) when (instruction(2 downto 0) = "010")and(instruction(3)='0') else
-	       instruction(5 downto 3) when (instruction(2 downto 0) = "001")or
-	       				    (instruction(2 downto 0) = "101")or 
-				    	    (instruction(2 downto 0) = "111")else
+    regRead <= instruction(7 downto 5) when (instruction(3 downto 0) = "0010")and(instruction(4)='0') else
+	       instruction(6 downto 4) when (instruction(3 downto 0) = "0001")or
+	       				    (instruction(3 downto 0) = "0101")or 
+				    	    (instruction(3 downto 0) = "0111")else
 	       "000";
 	
-    w_acc <= '1' when (dataFFT='1')and((instruction(2 downto 0) = "101")or 
-	     				(instruction(2 downto 0) = "001")or
-					(instruction(2 downto 0) = "010")or
-					(instruction(2 downto 0) = "011"))else
+    w_acc <= '1' when (dataFFT='1')and((instruction(3 downto 0) = "0101")or 
+	     				(instruction(3 downto 0) = "0001")or
+					(instruction(3 downto 0) = "0010")or
+					(instruction(3 downto 0) = "0011"))else
 		'0';
 
     ram_or_ula  <= '0' when instruction(2 downto 0) = "1000" else

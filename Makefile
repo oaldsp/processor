@@ -14,7 +14,7 @@ all:
 	ghdl -a flipflopT.vhdl
 	ghdl -e flipflopT
 
-	ghdl -a pc.vhdl
+	ghdl -a pc.vhd
 	ghdl -e pc	
 
 	ghdl -a uc.vhd

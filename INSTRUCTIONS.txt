@@ -45,8 +45,8 @@ dddddddd-> delta
 
 ==MOV================================================
 	 xxxxxxxxx|d|aaa|0101 -> MOV
-	 		   |0| -> save in accumulator
-	 		   |1| -> save in register
+	 		  |0| -> save in accumulator
+	 		  |1| -> save in register
 
 d 		   -> destination
 aaa        -> register number	  
