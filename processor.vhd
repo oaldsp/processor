@@ -63,7 +63,6 @@ component uc is
         ram_or_ula  : out std_logic;
 	addressRam  : out unsigned(6 downto 0);
         ram_w       : out std_logic;
-        ram_data    : out unsigned(15 downto 0);
         ula_sel     : out unsigned(1 downto 0)
     );
 end component;
@@ -134,7 +133,7 @@ component ram is
 end component;
 
 signal reg_to_mux, cte_to_mux, mux_to_ula, romOutS, romOutI, mux_to_bdr: unsigned(15 downto 0);
-signal uc_to_mux, saidaULA, acc_to_ula, mux_to_acc, uc_to_ram, ram_to_mux: unsigned(15 downto 0);
+signal uc_to_mux, saidaULA, acc_to_ula, mux_to_acc, ram_to_mux: unsigned(15 downto 0);
 signal uc_to_pc, pc_to_ucROM, uc_to_ram_Addss: unsigned(6 downto 0);
 signal FDEs, regUc_to_bdr, uc_to_bdrReg: unsigned(2 downto 0);
 signal ula_selS: unsigned(1 downto 0);
@@ -187,7 +186,6 @@ begin
 	ram_or_ula  => ram_or_ulaS,
 	addressRam  => uc_to_ram_Addss,
  	ram_w       => uc_to_ramW,
-        ram_data    => uc_to_ram,
         ula_sel     => ula_selS
     );
 
@@ -289,7 +287,7 @@ begin
     	clk 	 => clkP,
 	endereco => uc_to_ram_Addss,
 	wr_en	 => uc_to_ramW,
-	dado_in  => uc_to_ram,
+	dado_in  => saidaULA,
 	dado_out => ram_to_mux	
     ); 
 

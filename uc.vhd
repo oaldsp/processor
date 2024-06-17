@@ -23,7 +23,6 @@ entity uc is
     	ram_or_ula  : out std_logic;
 	addressRam  : out unsigned(6 downto 0);
 	ram_w 	    : out std_logic;
-    	ram_data    : out unsigned(15 downto 0);
         ula_sel     : out unsigned(1 downto 0)
     );
 end entity;
@@ -72,17 +71,18 @@ begin
     cte <= ("000000" & instruction(14 downto 5)) when (instruction(3 downto 0) = "0010")and(instruction(4)='1') else
 	   "0000000000000000";
 	
-    ula_sel <= "00" when (instruction(3 downto 0) = "0101")and(instruction(7) = '1') else
+    ula_sel <= "00" when (((instruction(3 downto 0) = "0101")and(instruction(7) = '1'))or
+	       		(instruction(3 downto 0) = "1000")or(instruction(3 downto 0) = "1001"))else
 	       "01" when (instruction(3 downto 0) = "0011")or
 	       		((instruction(3 downto 0) = "0101")and(instruction(7) = '0')) else
 		"10" when instruction(3 downto 0) = "0001" else
 		"11" when (instruction(3 downto 0) = "0010")or(instruction(3 downto 0) = "0111");
 
-    reg_to_w <= instruction(6 downto 4) when --(instruction(3 downto 0) = "0011")or--LINHA NAO FAZ SENTIDO
+    reg_to_w <= instruction(6 downto 4) when (instruction(3 downto 0) = "1000")or --(instruction(3 downto 0) = "0011")or--LINHA NAO FAZ SENTIDO
 		((instruction(3 downto 0) = "0101")and(instruction(7) = '1')) else
 		"000";
 
-    Is_to_w <= '1' when (dataFFT='1')and((instruction(3 downto 0) = "0011")or
+    Is_to_w <= '1' when (dataFFT='1')and((instruction(3 downto 0) = "0011")or((instruction(3 downto 0) = "1000"))or
 	       ((instruction(3 downto 0) = "0101")and(instruction(7) = '1'))) else
 	       '0';
 
@@ -98,11 +98,13 @@ begin
 					(instruction(3 downto 0) = "0011"))else
 		'0';
 
-    ram_or_ula  <= '0' when instruction(2 downto 0) = "1000" else
+    ram_or_ula <= '0' when instruction(3 downto 0) = "1000" else
 		   '1';
+    
+    addressRam <= instruction(13 downto 7) when (instruction(3 downto 0) = "1000") else
+		  instruction(10 downto 4) when (instruction(3 downto 0) = "1001"); 
 
-    --addressRam  <= instruction(13 downto 7);
-
-    --ram_w       <= instruction(6 downto 4);
+    ram_w <= '1' when instruction(3 downto 0) = "1001" else
+             '0';
 
 end architecture a_uc;

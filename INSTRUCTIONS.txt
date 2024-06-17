@@ -64,9 +64,8 @@ xx		-> whatever
 rrr     -> register number
 eeeeeee -> address in RAM
 ==SW==================================================
-	xx|eeeeeee|rrr|1001 -> SW
+	xxxxx|eeeeeee|1001 -> SW
 	
-xx		-> whatever
-rrr     -> register number
+xxxxx	-> whatever
 eeeeeee -> address in RAM	
 ======================================================
