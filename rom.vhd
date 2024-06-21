@@ -96,11 +96,27 @@ architecture a_romof of rom is
                 --NOP para provar que funciona
                 46 => B"0000000000000000",      -- nop
 
-
-
-
-
-
+		--5)Ler RAM 
+		--5.1)Carregando r1 com 33 para ser usado no CMP
+                47  => B"000000100001_0011",     -- li a, 33
+                48  => B"00000000_1_001_0101",   -- mov r1, a
+                --5.2)Carregando r2 com 1 para ficar incrementando acumulador
+                49  => B"000000000001_0011",     -- li a, 1
+                50  => B"00000000_1_010_0101",   -- mov r2, a
+                --5.3)Caregando acumulador com 1 para começar loop
+                51  => B"000000000001_0011",     -- li a, 1
+                --5.4)Passa o valor do acumulador para o r3 para usar no RAM address
+                52  => B"00000000_1_011_0101",   -- mov r3, a
+                --5.5)Passa o valor da RAM para r4 no endereço r3
+                53  => B"000000_011_100_1000",    -- lw r4, a
+                --5.6)Soma 1 no acumulador
+                54  => B"000000000_010_0001",    -- add a, r1
+                --5.7)Se a<33 salta para a 1.4
+                55  => B"000000000_001_0111",    -- cmp r1, a
+                56 => B"0_11_11111100_1_0100",   -- jr z, -4
+		
+		--Testando Exception
+                57 => B"0_11_11111100_1_1111",   -- não existe opcode 1111
 
 
 

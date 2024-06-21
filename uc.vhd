@@ -22,6 +22,7 @@ entity uc is
         Is_to_ld    : out std_logic;
     	w_acc       : out std_logic;
     	ram_or_ula  : out std_logic;
+        excep  	    : out std_logic;
 	addressRam  : out unsigned(6 downto 0);
 	ram_w 	    : out std_logic;
         ula_sel     : out unsigned(1 downto 0)
@@ -37,7 +38,7 @@ architecture a_uc of uc is
         );
     end component;
 
-    signal dataFFT, cmp_flag: std_logic;
+    signal dataFFT, cmp_flag, excepS: std_logic;
     signal relative_address: unsigned(7 downto 0);
 begin
     F_F_T: flipflopT port map(
@@ -63,7 +64,8 @@ begin
     dataO <= address when dataFFT='0' else
 	     instruction(11 downto 5) when instruction(4 downto 0) = "00100" else 
 	     relative_address(6 downto 0) when (instruction(4 downto 0) = "10100")and(cmp_flag='0')else
-	     address+"0000001";
+	     address+"0000001" when excepS = '0' else
+	     address;
     --------------	
     
     isCte <= '1' when (instruction(3 downto 0) = "0010")and(instruction(4)='1') else
@@ -110,5 +112,15 @@ begin
 
     ram_w <= '1' when instruction(3 downto 0) = "1001" else
              '0';
+
+    excepS <= '1' when instruction(3 downto 0) = "1111"or
+	      		instruction(3 downto 0) = "1110"or
+	      		instruction(3 downto 0) = "1101"or
+	      		instruction(3 downto 0) = "1100"or
+	      		instruction(3 downto 0) = "1011"or
+			instruction(3 downto 0) = "1010"else
+		'0';
+
+    excep <= excepS;  
 
 end architecture a_uc;

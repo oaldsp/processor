@@ -8,13 +8,13 @@ end;
 architecture a_processor_tb of processor_tb is
     component processor is
     port(
-        resetP, clkP       : in std_logic;
-                stateP             : out unsigned(1 downto 0);
-                pcP                : out unsigned(6 downto 0);
-                instructionP       : out unsigned(15 downto 0);
+        	resetP, clkP 	 : in std_logic;
+ 	        exception        : out std_logic;
+                stateP           : out unsigned(1 downto 0);
+                pcP              : out unsigned(6 downto 0);
+                instructionP     : out unsigned(15 downto 0);
                 ulaIn1P, ulaIn2P : out unsigned(15 downto 0);
-                --ARRUMAR ACUMULADOR
-                saidaUlaP           : out unsigned(15 downto 0)
+                saidaUlaP      	 : out unsigned(15 downto 0)
         );
     end component; 
    
@@ -54,7 +54,7 @@ begin
 
     	sim_time_proc: process
    	begin
-        	wait for 10 us;         -- <== TEMPO TOTAL DA SIMULACAO!!!
+        	wait for 15 us;         -- <== TEMPO TOTAL DA SIMULACAO!!!
        		finished <= '1';
         	wait;
     	end process sim_time_proc;

@@ -11,7 +11,7 @@
 rrr       -> register number  
 xxxxxxxxx -> whatever 	
 
-==SUB================================================
+==SUBB================================================
 	   f|??????????|q|0010 -> SUB
 	  f|xxxxxxx|rrr|0|0010 -> SUB with register 
 	   f|cccccccccc|1|0010 -> SUB with constant

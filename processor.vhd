@@ -4,12 +4,13 @@ use ieee.numeric_std.all;
 
 entity processor is
     port(
-        resetP, clkP       : in std_logic;
-        stateP             : out unsigned(1 downto 0);
-        pcP                : out unsigned(6 downto 0);
-        instructionP       : out unsigned(15 downto 0);
-    	ulaIn1P, ulaIn2P   : out unsigned(15 downto 0);
-	saidaUlaP          : out unsigned(15 downto 0)
+        resetP, clkP	 : in std_logic;
+    	exception 	 : out std_logic;
+        stateP           : out unsigned(1 downto 0);
+        pcP              : out unsigned(6 downto 0);
+        instructionP     : out unsigned(15 downto 0);
+    	ulaIn1P, ulaIn2P : out unsigned(15 downto 0);
+	saidaUlaP        : out unsigned(15 downto 0)
     );
 end;
 
@@ -62,6 +63,7 @@ component uc is
         Is_to_ld    : out std_logic;
 	w_acc 	    : out std_logic;
         ram_or_ula  : out std_logic;
+        excep       : out std_logic;
 	addressRam  : out unsigned(6 downto 0);
         ram_w       : out std_logic;
         ula_sel     : out unsigned(1 downto 0)
@@ -138,7 +140,7 @@ signal uc_to_mux, saidaULA, acc_to_ula, mux_to_acc, ram_to_mux: unsigned(15 down
 signal uc_to_pc, pc_to_ucROM, uc_to_ram_Addss: unsigned(6 downto 0);
 signal FDEs, regUc_to_bdr, uc_to_bdrReg: unsigned(2 downto 0);
 signal ula_selS: unsigned(1 downto 0);
-signal flag_to_mux, uc_to_bdrIs, uc_to_ramW, uc_to_muxLd, w_accS, ram_or_ulaS: std_logic;
+signal flag_to_mux, uc_to_bdrIs, uc_to_ramW, uc_to_muxLd, w_accS, ram_or_ulaS, excepS: std_logic;
 
     --Flags
 signal flag_c, flag_n, flag_o, flag_z, e_flagS: std_logic;
@@ -186,6 +188,7 @@ begin
         Is_to_ld    => uc_to_muxLd,
 	w_acc       => w_accS,
 	ram_or_ula  => ram_or_ulaS,
+	excep       => excepS,
 	addressRam  => uc_to_ram_Addss,
  	ram_w       => uc_to_ramW,
         ula_sel     => ula_selS
@@ -298,4 +301,5 @@ begin
     ulaIn1P       <= reg_to_mux;
     ulaIn2P       <= acc_to_ula;
     saidaUlaP     <= saidaULA;
+    exception 	  <= excepS;
 end architecture a_processor;
