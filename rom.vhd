@@ -98,67 +98,43 @@ architecture a_romof of rom is
 
 		--5)Ler RAM 
 		--5.1)Carregando r1 com 33 para ser usado no CMP
-                47  => B"000000100001_0011",     -- li a, 33
-                48  => B"00000000_1_001_0101",   -- mov r1, a
+                47 => B"000000100001_0011",     -- li a, 33
+                48 => B"00000000_1_001_0101",   -- mov r1, a
                 --5.2)Carregando r2 com 1 para ficar incrementando acumulador
-                49  => B"000000000001_0011",     -- li a, 1
-                50  => B"00000000_1_010_0101",   -- mov r2, a
+                49 => B"000000000001_0011",     -- li a, 1
+                50 => B"00000000_1_010_0101",   -- mov r2, a
                 --5.3)Caregando acumulador com 1 para começar loop
-                51  => B"000000000001_0011",     -- li a, 1
+                51 => B"000000000001_0011",     -- li a, 1
                 --5.4)Passa o valor do acumulador para o r3 para usar no RAM address
-                52  => B"00000000_1_011_0101",   -- mov r3, a
+                52 => B"00000000_1_011_0101",   -- mov r3, a
                 --5.5)Passa o valor da RAM para r4 no endereço r3
-                53  => B"000000_011_100_1000",    -- lw r4, a
+                53 => B"000000_011_100_1000",   -- lw r4, (r3)
                 --5.6)Soma 1 no acumulador
-                54  => B"000000000_010_0001",    -- add a, r1
+                54 => B"000000000_010_0001",    -- add a, r1
                 --5.7)Se a<33 salta para a 1.4
-                55  => B"000000000_001_0111",    -- cmp r1, a
-                56 => B"0_11_11111100_1_0100",   -- jr z, -4
+                55 => B"000000000_001_0111",    -- cmp r1, a
+                56 => B"0_11_11111100_1_0100",  -- jr z, -4
 		
+		--Testando operações que faltaram
+		--Pula para 59
+		57 => B"000_00111011_0_0100",  -- jmp
 		--Testando Exception
-                57 => B"0_11_11111100_1_1111",   -- não existe opcode 1111
-
-
-
-
-		--Passa o valor do acumulador para RAM no endereço X
-                --10  => B"00000_0000001_1001",   -- sw 20, a
-
-		--Caregando acumulador com 30 para escrever na RAM
-		--1  => B"000000011110_0011",     -- li a, 30
-		--Passa o valor do acumulador para RAM no endereço 20
-                --2  => B"00000_0010100_1001",   -- sw 20, a
-		--Caregando acumulador com 23 para escrever na RAM
-                --3  => B"000000010111_0011",     -- li a, 23
-                --Passa o valor do acumulador para RAM no endereço 55
-		--4  => B"00000_0110111_1001",   -- sw 55, a
-		--Passa o valor da RAM no endereço 20 para o r3
-                --5  => B"00_0010100_011_1000",   -- lw 20, a
-		
-		--Carregando r2 com 30 para ser usado no CMP
-		--4  => B"000000011110_0011",     -- li a, 30
-                --5  => B"00000000_1_010_0101",   -- mov r2, a
-		
-		--A. Carrega R3 (o registrador 3) com o valor 0
-		--6  => B"000000000000_0011",    	-- li a, 0
-                --14  => B"00000000_1_011_0101",   -- mov r3, a
-		--B. Carrega R4 com 0
-		--15  => B"000000000000_0011",    	-- li a, 0
-                --16  => B"00000000_1_100_0101",   -- mov r4, a
-		--C. Soma R3 com R4 e guarda em R4
-		--17  => B"00000000_0_011_0101",   -- mov a, r3
-                --18  => B"000000000_100_0001",    -- add a, r4
-                --19  => B"00000000_1_100_0101",   -- mov r4, a
-		--D. Soma 1 em R3
-		--20 => B"000000000001_0011",    	-- li a, 1
-		--21 => B"000000000_011_0001",    -- add a, r3
-		--22 => B"00000000_1_011_0101",   -- mov r3, a
-		--Se R3<30 salta para a instrução do passo C
-		--23 => B"000000000_010_0111",    -- cmp r2, a
-                --24 => B"0_11_11111001_1_0100",  -- jr z, -7
-		--F. Copia valor de R4 para R5
-		--25 => B"00000000_0_100_0101",   -- mov a, r4
-		--26 => B"00000000_1_101_0101",   -- mov r5, a
+		58 => B"0_11_11111100_1_1111",  -- não existe opcode 1111
+		--Carregando r1 com 100 
+                59  => B"000001100100_0011",    -- li a, 100
+	        60  => B"00000000_1_001_0101",  -- mov r1, a
+		--Subtrai 40 do valor do acumulador
+                61 => B"00000101000_1_0010",    -- sub 40, a
+		--Subtrai r3 do acumulador
+                62 => B"00000000_011_0_0010",    -- sub r3, a
+		--Move o valor do r1 para o acumulador
+		63 => B"00000000_0_001_0101",   -- mov a, r1
+                --Testando Exception
+		64 => B"0_11_11111100_1_1111",  -- não existe opcode 1111
+		--Para provar que não está executando
+		--Carregando r1 com 116
+                65  => B"000001110100_0011",    -- li a, 116
+                66  => B"00000000_1_001_0101",  -- mov r1, a
 		others => (others=>'0')
 	);
 begin
