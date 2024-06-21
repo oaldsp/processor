@@ -5,6 +5,7 @@ use ieee.numeric_std.all;
 entity uc is
     port(
         updatePC    : in std_logic;
+    	regInfo     : in unsigned(15 downto 0);
         instruction : in unsigned(15 downto 0);
         address     : in unsigned(6 downto 0);
         C: in std_logic; --Carry
@@ -74,6 +75,8 @@ begin
     ula_sel <= "00" when (((instruction(3 downto 0) = "0101")and(instruction(7) = '1'))or
 	       		(instruction(3 downto 0) = "1000")or(instruction(3 downto 0) = "1001"))else
 	       "01" when (instruction(3 downto 0) = "0011")or
+			(instruction(3 downto 0) = "1000")or
+			(instruction(3 downto 0) = "1001")or
 	       		((instruction(3 downto 0) = "0101")and(instruction(7) = '0')) else
 		"10" when instruction(3 downto 0) = "0001" else
 		"11" when (instruction(3 downto 0) = "0010")or(instruction(3 downto 0) = "0111");
@@ -86,9 +89,11 @@ begin
 	       ((instruction(3 downto 0) = "0101")and(instruction(7) = '1'))) else
 	       '0';
 
-    regRead <= instruction(7 downto 5) when (instruction(3 downto 0) = "0010")and(instruction(4)='0') else
+    regRead <= instruction(9 downto 7) when (instruction(3 downto 0) = "1000")else
+ 	       instruction(7 downto 5) when (instruction(3 downto 0) = "0010")and(instruction(4)='0') else
 	       instruction(6 downto 4) when (instruction(3 downto 0) = "0001")or
-	       				    (instruction(3 downto 0) = "0101")or 
+	       				    (instruction(3 downto 0) = "0101")or
+					    (instruction(3 downto 0) = "1001")or 
 				    	    (instruction(3 downto 0) = "0111")else
 	       "000";
 	
@@ -101,8 +106,7 @@ begin
     ram_or_ula <= '0' when instruction(3 downto 0) = "1000" else
 		   '1';
     
-    addressRam <= instruction(13 downto 7) when (instruction(3 downto 0) = "1000") else
-		  instruction(10 downto 4) when (instruction(3 downto 0) = "1001"); 
+    addressRam <= regInfo(6 downto 0);
 
     ram_w <= '1' when instruction(3 downto 0) = "1001" else
              '0';

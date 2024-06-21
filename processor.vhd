@@ -45,6 +45,7 @@ component uc is
     port
     (
         updatePC    : in std_logic;
+    	regInfo     : in unsigned(15 downto 0);
         instruction : in unsigned(15 downto 0);
         address     : in unsigned(6 downto 0);
     	C: in std_logic; --Carry
@@ -168,6 +169,7 @@ begin
 
     U_C: uc port map(
         updatePC    => clkP, --FDEs(2)
+	regInfo     => reg_to_mux,
         instruction => romOutI,
         address     => pc_to_ucROM,
 	C 	    => flag_c,

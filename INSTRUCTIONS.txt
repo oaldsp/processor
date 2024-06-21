@@ -32,10 +32,10 @@ ccccccccccc -> constant
 	  xxx|????????|r|0100 -> JUMP
 	  xxxx|eeeeeee|0|0100 -> JMP(absolute)
 	  xff|dddddddd|1|0100 -> JR(relative)
-	    00 -> flag C
-	    01 -> flag N
-	    10 -> flag O
-	    11 -> flag Z
+	   00 -> flag C
+	   01 -> flag N
+	   10 -> flag O
+	   11 -> flag Z
 
 r       -> Is a relative jump?
 xxx     -> whatever
@@ -58,14 +58,14 @@ xxxxxxxxx -> whatever
 rrr        -> register number
 xxxxxxxxx -> whatever
 ==LW==================================================
-	xx|eeeeeee|rrr|1000 -> LW	
+	xxxxxx|eee|rrr|1000 -> LW	
 	
-xx		-> whatever	
-rrr     -> register number
-eeeeeee -> address in RAM
+rrr     -> register number info
+eee 	-> register of address in RAM
+xxxxxx	-> whatever
 ==SW==================================================
-	xxxxx|eeeeeee|1001 -> SW
+	 xxxxxxxxx|eee|1001 -> SW
 	
-xxxxx	-> whatever
-eeeeeee -> address in RAM	
+eee -> address in RAM
+xxxxxxxxx	-> whatever	
 ======================================================
