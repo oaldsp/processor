@@ -39,8 +39,8 @@ begin
 	 	  ((seletor="11")and(entrada2>entrada1)) else 
 	 '0';
     --OVERFLOW FLAG(signed)
-    O <= '1' when (entrada1(15)='1' and entrada2(15)='1' and saidaS(15)='0') or 
-	 	  (entrada1(15)='0' and entrada2(15)='0' and saidaS(15)='1') else 
+    O <= '1' when (entrada1(15)='1' and entrada2(15)='1' and saidaS(15)='0' and seletor="11") or 
+	 	  (entrada1(15)='0' and entrada2(15)='0' and saidaS(15)='1' and seletor="11") else 
 	 '0';
     --OVERFLOW ZERO
     Z <= '1' when saidaS="00000000000000000" else

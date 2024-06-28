@@ -56,10 +56,11 @@ begin
     --Mover PC----
     relative_address <= (('0'&address) + instruction(12 downto 5));
     
-    cmp_flag <= C when instruction(13 downto 12) = "00" else 
-		N when instruction(13 downto 12) = "01" else
-		O when instruction(13 downto 12) = "10" else
-		Z;
+    cmp_flag <= C when (instruction(13 downto 12) = "00")and(instruction(4 downto 0) = "10100") else 
+		N when (instruction(13 downto 12) = "01")and(instruction(4 downto 0) = "10100") else
+		O when (instruction(13 downto 12) = "10")and(instruction(4 downto 0) = "10100") else
+		Z when (instruction(13 downto 12) = "11")and(instruction(4 downto 0) = "10100") else
+		'1';
 
     dataO <= address when dataFFT='0' else
 	     instruction(11 downto 5) when instruction(4 downto 0) = "00100" else 
