@@ -56,10 +56,10 @@ begin
     --Mover PC----
     relative_address <= (('0'&address) + instruction(12 downto 5));
     
-    cmp_flag <= C when (instruction(13 downto 12) = "00")and(instruction(4 downto 0) = "10100") else 
-		N when (instruction(13 downto 12) = "01")and(instruction(4 downto 0) = "10100") else
-		O when (instruction(13 downto 12) = "10")and(instruction(4 downto 0) = "10100") else
-		Z when (instruction(13 downto 12) = "11")and(instruction(4 downto 0) = "10100") else
+    cmp_flag <= C when (instruction(14 downto 13) = "00")and(instruction(4 downto 0) = "10100") else 
+		N when (instruction(14 downto 13) = "01")and(instruction(4 downto 0) = "10100") else
+		O when (instruction(14 downto 13) = "10")and(instruction(4 downto 0) = "10100") else
+		Z when (instruction(14 downto 13) = "11")and(instruction(4 downto 0) = "10100") else
 		'1';
 
     dataO <= address when dataFFT='0' else
@@ -82,7 +82,8 @@ begin
 			(instruction(3 downto 0) = "1001")or
 	       		((instruction(3 downto 0) = "0101")and(instruction(7) = '0')) else
 		"10" when instruction(3 downto 0) = "0001" else
-		"11" when (instruction(3 downto 0) = "0010")or(instruction(3 downto 0) = "0111");
+		"11" when (instruction(3 downto 0) = "0010")or(instruction(3 downto 0) = "0111")else
+		"00";
 
     reg_to_w <= instruction(6 downto 4) when (instruction(3 downto 0) = "1000")or --(instruction(3 downto 0) = "0011")or--LINHA NAO FAZ SENTIDO
 		((instruction(3 downto 0) = "0101")and(instruction(7) = '1')) else
@@ -97,6 +98,7 @@ begin
 	       instruction(6 downto 4) when (instruction(3 downto 0) = "0001")or
 	       				    (instruction(3 downto 0) = "0101")or
 					    (instruction(3 downto 0) = "1001")or 
+                                            (instruction(3 downto 0) = "0100")or
 				    	    (instruction(3 downto 0) = "0111")else
 	       "000";
 	

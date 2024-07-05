@@ -30,7 +30,8 @@ begin
 
     saida <= saidaS(15 downto 0);
     
-    enable_flag <= seletor(1);
+    enable_flag <= '1' when seletor="11" else
+		   '0';
 
     --CARRY FLAG(unsigned)
     C <= saidaS(16);

@@ -23,11 +23,11 @@ begin
    	   if rst='1' then
    	      stateS <= "00";
    	   elsif rising_edge(clk) then
-   	      if stateS="10" then        -- se agora esta em 2
-   	         stateS <= "00";         -- o prox vai voltar ao zero
-   	      else
+   	      --if stateS="10" then        -- se agora esta em 2
+   	      --  stateS <= "00";         -- o prox vai voltar ao zero
+   	      --else
    	         stateS <= stateS + 1;   -- senao avanca
-   	      end if;
+   	      --end if;
    	   end if;
    	end process;
 	state <= stateS;

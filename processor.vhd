@@ -272,7 +272,7 @@ begin
     );
 
     F_O: reg1bit port map(
-        clk      => clkP,
+        clk      => FDEs(0),
         rst      => resetP,
         wr_en    => e_flagS,
         data_in  => flag_o_ula,
